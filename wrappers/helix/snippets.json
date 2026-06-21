@@ -1,0 +1,42 @@
+{
+  "sources": [
+    {
+      "name": "friendly-snippets",
+      "git": "https://github.com/rafamadriz/friendly-snippets",
+      "paths": [
+        {
+          "scope": ["markdown", "latex"],
+          "path": "snippets/global.json"
+        },
+        {
+          "scope": ["python"],
+          "path": "snippets/python/python.json"
+        },
+        {
+          "scope": ["nix"],
+          "path": "snippets/nix.json"
+        },
+        {
+          "scope": ["markdown"],
+          "path": "snippets/markdown.json"
+        },
+        {
+          "scope": ["rust"],
+          "path": "snippets/rust/rust.json"
+        },
+        {
+          "scope": ["rust"],
+          "path": "snippets/rust/rustdoc.json"
+        },
+        {
+          "scope": ["latex"],
+          "path": "snippets/latex.json"
+        },
+        {
+          "scope": ["latex"],
+          "path": "snippets/latex/latex-snippets.json"
+        }
+      ]
+    }
+  ]
+}
