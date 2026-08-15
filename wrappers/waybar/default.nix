@@ -5,10 +5,32 @@
     lib,
     ...
   }: let
+    # Waybar 0.15.0 has no clickable workspaces for lua hyprland
+    # https://github.com/Alexays/Waybar/pull/5013
+    waybar =
+      (pkgs.waybar.override {
+        cavaSupport = false;
+      }).overrideAttrs (old: {
+        version = "0.15.0-git-09e69e0";
+        src = pkgs.fetchFromGitHub {
+          owner = "Alexays";
+          repo = "Waybar";
+          rev = "09e69e0f48214a1128d62417612bc47e8dc9e36";
+          hash = "sha256-grYWj1RHrkhM0NCIymTsZyObuQsCVf1kuzLaThwMxvc=";
+        };
+
+        mesonFlags =
+          (old.mesonFlags or [])
+          ++ [
+            "-Dwwan=disabled"
+          ];
+        doInstallCheck = false; # searches for version 0.15.0 exactly
+      });
+
     # 1. Create a runtime launcher to dynamically substitute $HOME in the CSS
     dynamicWaybar = pkgs.writeShellApplication {
       name = "waybar";
-      runtimeInputs = [pkgs.waybar pkgs.gnused pkgs.coreutils pkgs.findutils];
+      runtimeInputs = [waybar pkgs.gnused pkgs.coreutils pkgs.findutils];
       text = ''
         CSS_PATH="''${XDG_RUNTIME_DIR:-/tmp}/waybar-style.css"
         HWMON_SYMLINK="''${XDG_RUNTIME_DIR:-/tmp}/waybar_cpu_hwmon"
