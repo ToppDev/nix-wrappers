@@ -63,6 +63,7 @@
         unsetopt BEEP
 
         # History Configuration
+        mkdir -p $HOME/.local/share/zsh/
         HISTFILE="$HOME/.local/share/zsh/zsh_history"
         HISTSIZE=10000000 # Number of history lines to keep.
         SAVEHIST=10000000 # Number of history lines to save.
