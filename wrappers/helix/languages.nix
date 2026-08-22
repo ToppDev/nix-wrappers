@@ -6,41 +6,36 @@
     ...
   }: {
     # Using makeWrapperArgs natively within the wrapper
-    drv.makeWrapperArgs = [
-      "--suffix"
-      "PATH"
-      ":"
-      (lib.makeBinPath (with pkgs; [
-        lldb
-        uwu-colors
-        bibtex-tidy
-        texlab
-        simple-completion-language-server
-        ltex-ls-plus
-        harper
-        marksman
-        alejandra
-        nixd
-        taplo
-        typstyle
-        awk-language-server
-        bash-language-server
-        clang-tools
-        cmake-language-server
-        dockerfile-language-server
-        vscode-langservers-extracted
-        java-language-server
-        typescript-language-server
-        jq-lsp
-        lua-language-server
-        openscad-lsp
-        rust-analyzer
-        lemminx
-        yaml-language-server
-        zig
-        zls
-        tinymist
-      ]))
+    runtimePkgs = with pkgs; [
+      lldb
+      uwu-colors
+      bibtex-tidy
+      texlab
+      simple-completion-language-server
+      ltex-ls-plus
+      harper
+      marksman
+      alejandra
+      nixd
+      taplo
+      typstyle
+      awk-language-server
+      bash-language-server
+      clang-tools
+      cmake-language-server
+      dockerfile-language-server
+      vscode-langservers-extracted
+      java-language-server
+      typescript-language-server
+      jq-lsp
+      lua-language-server
+      openscad-lsp
+      rust-analyzer
+      lemminx
+      yaml-language-server
+      zig
+      zls
+      tinymist
     ];
 
     languages = {
