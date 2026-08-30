@@ -87,8 +87,8 @@ in
       hl.bind("SUPER + SHIFT + " .. key, hs.dsp.window.move({ workspace = ws }))
     end
 
-    hl.bind("SUPER + I", hs.dsp.focus({ workspace = "e+1" }))
-    hl.bind("SUPER + Tab", hs.dsp.focus({ workspace = "e+1" }))
+    hl.bind("SUPER + I", hs.dsp.focus({ workspace = "m+1" }))
+    hl.bind("SUPER + Tab", hs.dsp.focus({ workspace = "m+1" }))
     hl.bind("SUPER + mouse_down", hs.dsp.focus({ workspace = "e+1" }))
     hl.bind("SUPER + mouse_up", hs.dsp.focus({ workspace = "e-1" }))
     hl.bind("SUPER + X", hs.dsp.grab_rogue_windows())
