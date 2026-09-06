@@ -44,7 +44,7 @@
         else
           session_name="git-$(basename "$current_path" | sed -r 's/\.//g')"
           [ "$(date -r "$current_path/.git/FETCH_HEAD" +'%F')" != "$(date +'%F')" ] && do_fetch=1 || do_fetch=0
-          tmux popup -T"lazygit" -h90% -w90% -E "tmux attach -t \"$session_name\" || tmux new -s \"$session_name\" '[ $do_fetch = 1 ] && echo Fetching Git repo... && git -C \"$current_path\" fetch; ${pkgs.lazygit}/bin/lazygit -p \"$current_path\"'"
+          tmux popup -T"lazygit" -h90% -w90% -E "tmux attach -t \"$session_name\" || tmux new -s \"$session_name\" '[ $do_fetch = 1 ] && echo Fetching Git repo... && git -C \"$current_path\" fetch; ${lib.getExe selfpkgs.lazygit} -p \"$current_path\"'"
         fi
       '';
     };
