@@ -9,12 +9,11 @@
     settings = {
       add_newline = false;
       format = lib.concatStrings [
+        "$all"
+        "$line_break"
         "$directory"
         "\${custom.yazi}"
         "$character"
-      ];
-      right_format = lib.concatStrings [
-        "$all"
       ];
       directory = {
         read_only = " 🔒";
