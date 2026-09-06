@@ -49,7 +49,7 @@
       '';
     };
 
-    windowText = "#{?#{==:#{host},#{pane_title}},#{b:pane_current_path},#T}";
+    windowText = "#h:#{?#{==:#{host},#{pane_title}},#{b:pane_current_path},#T}";
   in {
     imports = [wlib.wrapperModules.tmux];
 
@@ -75,6 +75,7 @@
         set -g renumber-windows on       # renumber all windows when any window is closed
         set -g set-clipboard on          # use system set-clipboard
         set -g status-position top
+        set -g extended-keys on
         # set -g default-terminal "''${TERM}"
         # set-option -g default-shell "''${SHELL}"
         set -g pane-active-border-style 'fg=magenta,bg=default'
@@ -114,7 +115,6 @@
         bind * list-clients
         bind l refresh-client
 
-        bind C-r source-file ~/.config/tmux/tmux.conf
         bind : command-prompt
         # bind * setw synchronize-panes
         bind P set pane-border-status
