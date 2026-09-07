@@ -6,6 +6,11 @@
     ...
   }: let
     selfpkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+    rm-or-trash = pkgs.writeShellApplication {
+      name = "rm-or-trash";
+      runtimeInputs = [pkgs.rmtrash pkgs.coreutils];
+      text = builtins.readFile ./rm-or-trash.sh;
+    };
   in {
     imports = [wlib.wrapperModules.zsh];
     zshAliases = {
@@ -26,7 +31,7 @@
       # hx = "helix";
 
       # rm = "rm -vI";
-      rm = "${pkgs.rmtrash}/bin/rmtrash -I";
+      rm = "${lib.getExe rm-or-trash} -I";
       rmdir = "${pkgs.rmtrash}/bin/rmdirtrash";
       trash-restore = "${pkgs.trashy}/bin/trash list | ${lib.getExe pkgs.fzf} --multi | ${pkgs.gawk}/bin/awk '{$1=$1;print}' | ${pkgs.util-linux}/bin/rev | ${pkgs.coreutils}/bin/cut -d ' ' -f1 | ${pkgs.util-linux}/bin/rev | ${pkgs.toybox}/bin/xargs ${pkgs.trashy}/bin/trash restore --match=exact --force";
       trash-empty = "${pkgs.trashy}/bin/trash empty --all";
