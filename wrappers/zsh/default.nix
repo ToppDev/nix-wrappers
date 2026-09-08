@@ -6,10 +6,30 @@
     ...
   }: let
     selfpkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
-    rm-or-trash = pkgs.writeShellApplication {
+    mkOrTrash = {
+      name,
+      trashCmd,
+      realCmd,
+    }:
+      pkgs.writeShellApplication {
+        inherit name;
+        runtimeInputs = [pkgs.rmtrash pkgs.coreutils];
+        text =
+          ''
+            trash_cmd="${trashCmd}"
+            real_cmd="${realCmd}"
+          ''
+          + builtins.readFile ./rm-or-trash.sh;
+      };
+    rm-or-trash = mkOrTrash {
       name = "rm-or-trash";
-      runtimeInputs = [pkgs.rmtrash pkgs.coreutils];
-      text = builtins.readFile ./rm-or-trash.sh;
+      trashCmd = "rmtrash";
+      realCmd = "rm";
+    };
+    rmdir-or-trash = mkOrTrash {
+      name = "rmdir-or-trash";
+      trashCmd = "rmdirtrash";
+      realCmd = "rmdir";
     };
   in {
     imports = [wlib.wrapperModules.zsh];
@@ -32,7 +52,7 @@
 
       # rm = "rm -vI";
       rm = "${lib.getExe rm-or-trash} -I";
-      rmdir = "${pkgs.rmtrash}/bin/rmdirtrash";
+      rmdir = lib.getExe rmdir-or-trash;
       trash-restore = "${pkgs.trashy}/bin/trash list | ${lib.getExe pkgs.fzf} --multi | ${pkgs.gawk}/bin/awk '{$1=$1;print}' | ${pkgs.util-linux}/bin/rev | ${pkgs.coreutils}/bin/cut -d ' ' -f1 | ${pkgs.util-linux}/bin/rev | ${pkgs.toybox}/bin/xargs ${pkgs.trashy}/bin/trash restore --match=exact --force";
       trash-empty = "${pkgs.trashy}/bin/trash empty --all";
     };
