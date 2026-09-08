@@ -54,7 +54,7 @@ Public flake of standalone, declarative per-app wrappers. Dendritic flake-parts 
 
 ```
 nix flake check
-nix build .#<tool>   # for each wrapper touched
+nix build --dry-run .#<tool>   # for each wrapper touched
 ```
 
 ## Documentation

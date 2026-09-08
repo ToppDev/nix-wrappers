@@ -69,9 +69,11 @@
         nixd = {
           config.nixd = {
             formatting.command = ["alejandra"];
-            nixpkgs.expr = ''import (builtins.getFlake (builtins.getEnv "HOME" + "/.nix-config")).inputs.nixpkgs { }'';
+            # $NH_FLAKE is exported by programs.nh and holds the absolute path
+            # to the system flake, so nixd finds it wherever it is checked out.
+            nixpkgs.expr = ''import (builtins.getFlake (builtins.getEnv "NH_FLAKE")).inputs.nixpkgs { }'';
             options = {
-              nixos.expr = ''(builtins.getFlake (builtins.getEnv "HOME" + "/.nix-config")).nixosConfigurations.default.options'';
+              nixos.expr = ''(builtins.getFlake (builtins.getEnv "NH_FLAKE")).nixosConfigurations.default.options'';
             };
           };
         };
