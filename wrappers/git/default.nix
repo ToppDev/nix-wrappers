@@ -25,6 +25,9 @@
       diff = {
         colorMoved = "default";
       };
+      fetch = {
+        prune = true;
+      };
       init = {
         defaultBranch = "main";
       };
