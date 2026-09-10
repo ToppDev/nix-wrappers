@@ -49,7 +49,16 @@
       '';
     };
 
-    windowText = "#h:#{?#{==:#{host},#{pane_title}},#{b:pane_current_path},#T}";
+    panehost = pkgs.writeShellApplication {
+      name = "tmux-pane-host";
+      runtimeInputs = [pkgs.procps pkgs.gawk];
+      text = builtins.readFile ./pane-host.sh;
+    };
+
+    # `#h` is always the machine running the tmux server, so it keeps naming the
+    # local host while a pane is ssh'd elsewhere. Ask the pane's processes instead.
+    paneHost = "#(${lib.getExe panehost} #{pane_pid} #{host_short})";
+    windowText = "${paneHost}:#{?#{==:#{host},#{pane_title}},#{b:pane_current_path},#T}";
   in {
     imports = [wlib.wrapperModules.tmux];
 
@@ -173,7 +182,11 @@
         bind -r C-Left resize-pane -L 5
       '';
     # configuration to run after all tmux plugins are sourced
-    configAfter = '''';
+    configAfter =
+      # bash
+      ''
+        set -g status-interval 5 # how quickly a pane's host change is picked up
+      '';
 
     plugins = [
       {
