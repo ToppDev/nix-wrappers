@@ -18,6 +18,12 @@
       alejandra
       nixd
       taplo
+      # Python: the `python` language entry below names all three, so without
+      # them helix reports "language server not found" and the auto-format
+      # silently does nothing.
+      python3Packages.python-lsp-server
+      basedpyright
+      ruff
       typstyle
       awk-language-server
       bash-language-server
@@ -73,7 +79,11 @@
             # to the system flake, so nixd finds it wherever it is checked out.
             nixpkgs.expr = ''import (builtins.getFlake (builtins.getEnv "NH_FLAKE")).inputs.nixpkgs { }'';
             options = {
-              nixos.expr = ''(builtins.getFlake (builtins.getEnv "NH_FLAKE")).nixosConfigurations.default.options'';
+              # The host is looked up by name, read at evaluation time from
+              # /etc/hostname. It used to ask for `nixosConfigurations.default`,
+              # which practically no flake defines — so nixd threw on every
+              # option completion instead of offering any.
+              nixos.expr = ''(builtins.getFlake (builtins.getEnv "NH_FLAKE")).nixosConfigurations.''${builtins.replaceStrings ["\n"] [""] (builtins.readFile /etc/hostname)}.options'';
             };
           };
         };
