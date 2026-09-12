@@ -1,0 +1,19 @@
+{self, ...}: {
+  flake.wrappers.waybar = {
+    pkgs,
+    lib,
+    ...
+  }: {
+    settings."power-profiles-daemon" = {
+      format = "{icon}";
+      tooltip-format = "Power profile: {profile}\nDriver: {driver}";
+      tooltip = true;
+      format-icons = {
+        default = "";
+        performance = "";
+        balanced = "";
+        power-saver = "";
+      };
+    };
+  };
+}

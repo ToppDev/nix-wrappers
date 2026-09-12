@@ -3,6 +3,7 @@
     wlib,
     pkgs,
     lib,
+    config,
     ...
   }: let
     # Waybar 0.15.0 has no clickable workspaces for lua hyprland
@@ -55,15 +56,23 @@
         # expands no variables of its own, so the path is substituted here —
         # without this the module reads a path nothing ever creates and the
         # temperature never appears.
-        sed "s|@HWMON@|$HWMON_SYMLINK|g" "${configFile}" > "$CONFIG_PATH"
+        sed "s|@HWMON@|$HWMON_SYMLINK|g" "${mergedConfigFile}" > "$CONFIG_PATH"
 
         exec waybar --config "$CONFIG_PATH" --style "$CSS_PATH" "$@"
       '';
     };
 
+    # The bar layout — which modules appear where. Each module's own settings
+    # live in a sibling module under ./modules, merged in by the module system.
+    #
     # Bound here rather than read back from config.configFile.path: that
     # path is derived from binName, which comes from the package, and the
     # launcher below *is* the package — reading it would close a cycle.
+    # Built from the *merged* `config.settings`, not from the local binding, so
+    # sibling modules contributing their own `settings.<name>` reach the
+    # launcher too. Safe from recursion: settings never depend on the package.
+    mergedConfigFile = pkgs.writeText "waybar-config.json" (builtins.toJSON config.settings);
+
     waybarSettings = {
       layer = "top";
       height = 16;
@@ -99,34 +108,7 @@
         orientation = "horizontal";
         modules = ["temperature" "cpu" "memory" "disk"];
       };
-
-      "backlight" = import ./modules/_backlight.nix {inherit pkgs;};
-      "battery" = import ./modules/_battery.nix {inherit pkgs;};
-      "bluetooth" = import ./modules/_bluetooth.nix {inherit pkgs;};
-      "clock" = import ./modules/_clock.nix {inherit pkgs;};
-      "cpu" = import ./modules/_cpu.nix {inherit self pkgs lib;};
-      "custom/appmenu" = import ./modules/_custom-appmenu.nix {inherit pkgs;};
-      "custom/brave" = import ./modules/_custom-brave.nix {inherit self pkgs lib;};
-      "custom/windowsvm" = import ./modules/_custom-windowsvm.nix {inherit pkgs;};
-      "custom/exit" = import ./modules/_custom-exit.nix {inherit self pkgs lib;};
-      "disk" = import ./modules/_disk.nix {inherit pkgs;};
-      "hyprland/window" = import ./modules/_hyprland-window.nix {inherit pkgs;};
-      "hyprland/workspaces" = import ./modules/_hyprland-workspaces.nix {inherit pkgs;};
-      "keyboard-state" = import ./modules/_keyboard-state.nix {inherit pkgs;};
-      "memory" = import ./modules/_memory.nix {inherit self pkgs lib;};
-      "network" = import ./modules/_network.nix {inherit pkgs;};
-      # Same shape for both compositors, so one file serves both rather than a
-      # byte-identical copy that can drift.
-      "niri/window" = import ./modules/_hyprland-window.nix {inherit pkgs;};
-      "niri/workspaces" = import ./modules/_niri-workspaces.nix {inherit pkgs;};
-      "power-profiles-daemon" = import ./modules/_power-profiles-daemon.nix {inherit pkgs;};
-      "pulseaudio" = import ./modules/_pulseaudio.nix {inherit pkgs;};
-      "wlr/taskbar" = import ./modules/_taskbar.nix {inherit pkgs;};
-      "tray" = import ./modules/_tray.nix {inherit pkgs;};
-      "image" = import ./modules/_image.nix {inherit pkgs;};
-      "temperature" = import ./modules/_temperature.nix {};
     };
-    configFile = pkgs.writeText "waybar-config.json" (builtins.toJSON waybarSettings);
   in {
     imports = [wlib.wrapperModules.waybar];
 

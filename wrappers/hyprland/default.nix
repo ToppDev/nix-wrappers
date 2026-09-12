@@ -83,7 +83,8 @@
           })
         ''
         (builtins.readFile ./settings.lua)
-        (import ./_keybinds.nix {inherit self pkgs lib;})
+        # The keybinds are a sibling module (keybinds.nix) rather than an
+        # import, so they go through the module system like everything else.
       ];
     };
   };
