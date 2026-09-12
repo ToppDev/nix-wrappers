@@ -50,6 +50,24 @@ Public flake of standalone, declarative per-app wrappers. Dendritic flake-parts 
 - Consumers track `github:ToppDev/nix-wrappers`, so a change lands only after it is pushed and their lock updated
 - To test end-to-end, point the consuming flake's `wrappers` input at a local checkout and rebuild there
 
+This repo is consumed two different ways, and a change must keep both working:
+
+- As a **flake input**: the consumer imports `flakeModules.wrappers` and re-evaluates the whole module tree against its own `nixpkgs` and its own inputs, then merges its own `flake.wrappers.<tool>` declarations on top
+- As a **direct run**: `nix run github:ToppDev/nix-wrappers#<tool>` builds `packages.<system>.<tool>` from this flake alone — nothing from any consumer is merged in
+
+Consequences a wrapper author must respect:
+
+- A wrapper must never *require* an option that only a consumer sets — anything host- or user-specific needs a working default so the standalone build still produces a usable tool
+- Removing or slimming what a wrapper bundles silently degrades the standalone run for everyone, even when the motivation came from a consumer that wanted to differ — per-consumer divergence belongs in the consumer, via re-declaring `flake.wrappers.<tool>` or `.wrap {...}`
+- Both paths must be checked before a change is pushed
+
+## CI
+
+- A GitHub Actions workflow builds every wrapper on `x86_64-linux`, one job per wrapper
+- A separate job consumes the flake as an input and evaluates it, covering the flake-input path
+- Both jobs run on every push and pull request
+- `aarch64-linux` is deliberately out of scope
+
 ## Verify changes
 
 ```

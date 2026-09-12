@@ -9,7 +9,13 @@ This repository utilizes [nix-wrapper-modules](https://github.com/BirdeeHub/nix-
 ### Run
 
 ```bash
-nix run github:ToppDev/nix-wrappers
+nix run github:ToppDev/nix-wrappers#<tool>
+```
+
+To see the available `<tool>` names:
+
+```bash
+nix flake show github:ToppDev/nix-wrappers
 ```
 
 ### Include into a nix configuration

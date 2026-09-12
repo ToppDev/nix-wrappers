@@ -1,0 +1,167 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    #       /--------- Minute [0,59]
+    #       | /------- Hour [0,23] in UTC
+    #       | | /----- Day of the month [1,31]
+    #       | | | /--- Month of the year [1,12]
+    #       | | | | /- Day of the week ([0,6] with 0=Sunday)
+    - cron: 0 5 * * 1 # catches upstream drift even when nothing is pushed
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true # a superseded push has nothing left to prove
+
+jobs:
+  # Evaluation only, so it fails within a minute instead of after a build wave.
+  check:
+    name: Flake check
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      # No --all-systems: aarch64-linux is deliberately out of scope
+      - run: nix flake check -L
+
+  # The wrapper list is derived, not hardcoded, so a new wrappers/<tool>/ is
+  # picked up by the build fan-out without touching this file.
+  matrix:
+    name: Collect wrappers
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      packages: ${{ steps.list.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: List wrapper packages
+        id: list
+        run: |
+          packages="$(nix eval --json .#packages.x86_64-linux --apply 'builtins.attrNames' | jq -c '.')"
+          echo "$packages"
+          echo "packages=$packages" >> "$GITHUB_OUTPUT"
+
+  # One wrapper per runner: helix alone pulls a ~7 GiB closure of language
+  # servers and environment is a near-superset of it, so several of these on
+  # one runner would run the disk out.
+  build:
+    name: Build
+    needs: matrix
+    runs-on: ubuntu-latest
+    # waybar pins a GitHub rev via overrideAttrs, so it is never a cache hit
+    # and compiles from source on every run.
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false # one broken wrapper must not hide the state of the rest
+      max-parallel: 6 # ~30 wrappers at once would look like runner abuse
+      matrix:
+        package: ${{ fromJSON(needs.matrix.outputs.packages) }}
+    steps:
+      # Hosted runners leave ~14 GB free, which the bigger closures exceed.
+      # Done before nix is installed, since /nix lives on the same filesystem.
+      - name: Reclaim disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android /usr/local/share/boost
+          df -h /
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - run: nix build ".#${{ matrix.package }}" -L
+
+  # nix build only ever exercises this flake standalone. A downstream flake
+  # instead imports flakeModules.wrappers into its own flake-parts tree, where
+  # self and inputs resolve against the consumer — that path is only covered
+  # by actually being consumed.
+  consumer:
+    name: Consumer flake
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Write throwaway consumer flake
+        run: |
+          mkdir -p "$RUNNER_TEMP/consumer/modules"
+          # importTree needs a non-empty tree to mirror a real consumer
+          cat > "$RUNNER_TEMP/consumer/modules/placeholder.nix" <<'EOF'
+          {...}: {}
+          EOF
+          cat > "$RUNNER_TEMP/consumer/flake.nix" <<'EOF'
+          {
+            inputs = {
+              nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+              nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+              flake-parts.url = "github:hercules-ci/flake-parts";
+              wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
+              # hyprland/hyprsplit are declared because the hyprland wrapper
+              # reads inputs.hyprsplit out of the *consumer's* inputs.
+              hyprland.url = "github:hyprwm/Hyprland/v0.55.4";
+              hyprsplit = {
+                url = "github:shezdy/hyprsplit/main";
+                inputs.hyprland.follows = "hyprland";
+              };
+
+              wrappers = {
+                url = "github:ToppDev/nix-wrappers";
+                inputs.nixpkgs.follows = "nixpkgs";
+                inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+                inputs.hyprland.follows = "hyprland";
+                inputs.hyprsplit.follows = "hyprsplit";
+              };
+            };
+
+            outputs = inputs: let
+              inherit (inputs.nixpkgs) lib;
+              inherit (lib.fileset) toList fileFilter;
+
+              isNixModule = file:
+                file.hasExt "nix"
+                && file.name != "flake.nix"
+                && !lib.hasPrefix "_" file.name;
+
+              importTree = path:
+                toList (fileFilter isNixModule path);
+            in
+              inputs.flake-parts.lib.mkFlake
+              {inherit inputs;}
+              {
+                systems = ["x86_64-linux"];
+
+                imports =
+                  [
+                    inputs.wrapper-modules.flakeModules.wrappers
+                    inputs.wrappers.flakeModules.wrappers
+                  ]
+                  ++ importTree ./modules;
+              };
+          }
+          EOF
+      - name: Evaluate the consumer flake against this checkout
+        working-directory: ${{ runner.temp }}/consumer
+        run: |
+          override=(--override-input wrappers "path:$GITHUB_WORKSPACE")
+          # attrNames proves the module trees merged at all
+          nix eval --json "${override[@]}" .#packages.x86_64-linux --apply 'builtins.attrNames'
+          # forcing every drvPath proves each wrapper still evaluates when self
+          # and inputs point at the consumer rather than at this flake
+          nix eval --json "${override[@]}" .#packages.x86_64-linux \
+            --apply 'builtins.mapAttrs (_: p: p.drvPath)' > /dev/null
