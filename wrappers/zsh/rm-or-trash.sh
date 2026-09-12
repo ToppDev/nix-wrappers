@@ -2,11 +2,12 @@
 # `rm`/`rmdir` replacement: trashes normally, but removes for real wherever a
 # trash bin would be useless or impossible. `$trash_cmd` and `$real_cmd` are
 # set by the wrapper (default.nix). Two cases fall back to real removal:
-# - Hosts where "/" is an ephemeral ZFS dataset rolled back on every boot
-#   (marked by /etc/ephemeral-root-marker). Anything on that device loses its
-#   trash bin at the next reboot anyway.
+# - Systems whose "/" is rolled back on every boot (an ephemeral root). There
+#   is no way to detect that from the filesystem, so it is opt-in: create the
+#   marker file below and anything on the root device is removed outright,
+#   since its trash bin would not survive the next reboot anyway.
 # - Volumes that cannot hold a bin. The freedesktop spec keeps the trash on the
-#   file's own volume, so root-owned service datasets (/apps, /mnt/HDD) have
+#   file's own volume, so a mount the user cannot write to at its top level has
 #   nowhere to put one and trash-put fails instead of deleting.
 marker=/etc/ephemeral-root-marker
 

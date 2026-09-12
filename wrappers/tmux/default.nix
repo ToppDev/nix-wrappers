@@ -289,7 +289,9 @@
           ''
             set-environment -gu TMUX_PLUGIN_MANAGER_PATH
             set -g @sessionx-bind 'q'
-            set -g @sessionx-x-path "''${HOME}/Git"
+            # Overridable without editing this repo; the fallback is only a common
+            # layout, not an assumption that it exists.
+            set -g @sessionx-x-path "''${SESSIONX_X_PATH:-''${HOME}/Git}"
             set -g @sessionx-window-height '85%'
             set -g @sessionx-window-width '75%'
             set -g @sessionx-zoxide-mode 'on'
