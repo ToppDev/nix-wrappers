@@ -6,7 +6,24 @@
   }: {
     imports = [wlib.wrapperModules.swaylock];
 
-    package = pkgs.swaylock-effects;
+    # The generated config is written as literal `key=value` lines and
+    # swaylock expands nothing, so a wallpaper under $HOME cannot be a
+    # setting — it went in verbatim and the lock screen simply never got a
+    # background. Passed as a flag at launch instead, and only when the file
+    # is actually there, since swaylock fails on a missing --image.
+    package = pkgs.writeShellApplication {
+      name = "swaylock";
+      runtimeInputs = [pkgs.swaylock-effects];
+      text = ''
+        WALLPAPER="$HOME/.cache/current_wallpaper_blur.jpg"
+
+        if [ -f "$WALLPAPER" ]; then
+          exec swaylock --image "$WALLPAPER" "$@"
+        fi
+
+        exec swaylock "$@"
+      '';
+    };
 
     settings = {
       ignore-empty-password = true;
@@ -17,7 +34,7 @@
       datestr = "%a, %e of %B";
 
       # screenshots = true; # Add current screenshot as wallpaper
-      image = "$HOME/.cache/current_wallpaper_blur.jpg"; # Add an image as a background
+      # image: set by the launcher above, not here — see the comment there.
 
       fade-in = 1; # Fade in time
 
