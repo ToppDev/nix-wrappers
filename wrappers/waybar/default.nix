@@ -115,7 +115,9 @@
       "keyboard-state" = import ./modules/_keyboard-state.nix {inherit pkgs;};
       "memory" = import ./modules/_memory.nix {inherit self pkgs lib;};
       "network" = import ./modules/_network.nix {inherit pkgs;};
-      "niri/window" = import ./modules/_niri-window.nix {inherit pkgs;};
+      # Same shape for both compositors, so one file serves both rather than a
+      # byte-identical copy that can drift.
+      "niri/window" = import ./modules/_hyprland-window.nix {inherit pkgs;};
       "niri/workspaces" = import ./modules/_niri-workspaces.nix {inherit pkgs;};
       "power-profiles-daemon" = import ./modules/_power-profiles-daemon.nix {inherit pkgs;};
       "pulseaudio" = import ./modules/_pulseaudio.nix {inherit pkgs;};

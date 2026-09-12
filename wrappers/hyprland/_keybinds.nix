@@ -22,7 +22,7 @@ in
     hl.bind("SUPER + B", hl.dsp.exec_cmd("${pkgs.systemd}/bin/systemctl --user is-active waybar.service && ${pkgs.systemd}/bin/systemctl --user stop waybar.service || ${pkgs.systemd}/bin/systemctl --user start waybar.service"))
     hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd("${pkgs.systemd}/bin/systemctl --user restart waybar.service"))
     hl.bind("SUPER + O", hl.dsp.exec_cmd("${pkgs.gnome-characters}/bin/gnome-characters"))
-    hl.bind("Print", hl.dsp.exec_cmd("flameshot gui"))
+    hl.bind("Print", hl.dsp.exec_cmd("${lib.getExe pkgs.flameshot} gui"))
 
     -- Window & Focus Management
     hl.bind("SUPER + Q", hl.dsp.window.close())

@@ -1,9 +1,10 @@
-{...}: {
+{self, ...}: {
   flake.wrappers.lazygit = {
     wlib,
     pkgs,
     ...
   }: let
+    selfpkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
     configFile = (pkgs.formats.yaml {}).generate "lazygit-config.yml" {
       git = {
         autoFetch = false;
@@ -20,6 +21,12 @@
     imports = [wlib.modules.default];
 
     package = pkgs.lazygit;
+
+    # The runShell hook below calls git, and lazygit shells out to it for
+    # everything it does. Everything else here is store-pinned, so relying on
+    # the ambient PATH for the one tool the program cannot work without was
+    # the odd one out.
+    runtimePkgs = [selfpkgs.git pkgs.coreutils];
 
     flags = {
       "--use-config-file" = "${configFile}";

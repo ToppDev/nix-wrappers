@@ -8,6 +8,10 @@
     selfpkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
     popuptmux = pkgs.writeShellApplication {
       name = "popuptmux";
+      # Run from the tmux server via run-shell, so the PATH is whatever the
+      # server was started with — the least reliable place to find a tool.
+      # panehost below already pins its own; these three did not.
+      runtimeInputs = [pkgs.tmux];
       text = ''
         current_path=$(tmux display-message -p -F "#{pane_current_path}")
         session_name=$(tmux display-message -p -F "#{session_name}")
@@ -20,6 +24,7 @@
     };
     popuptrash = pkgs.writeShellApplication {
       name = "popuptrash";
+      runtimeInputs = [pkgs.tmux];
       text = ''
         session_name=$(tmux display-message -p -F "#{session_name}")
         if [[ "$session_name" == trash ]]; then
@@ -31,6 +36,7 @@
     };
     popupgit = pkgs.writeShellApplication {
       name = "popupgit";
+      runtimeInputs = [pkgs.tmux selfpkgs.git pkgs.coreutils pkgs.gnused];
       text = ''
         current_path=$(tmux display-message -p -F "#{pane_current_path}")
         if [[ ! -d "$current_path/.git" && ! $(git -C "$current_path" rev-parse --git-dir 2> /dev/null) ]]; then
