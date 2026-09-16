@@ -186,7 +186,9 @@
         # Yazi directory wrapper
         function y() {
           local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-          yazi "$@" --cwd-file="$tmp"
+          # The wrapped yazi, not whatever is on PATH: a bare `yazi` bypasses this
+          # repo's yazi wrapper and all of its config.
+          ${lib.getExe selfpkgs.yazi} "$@" --cwd-file="$tmp"
           if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
             builtin cd -- "$cwd"
           fi
@@ -194,7 +196,7 @@
         }
 
         # Starship outputs the unwrapped starship executable, so we need to fix it
-        eval "$(${lib.getExe selfpkgs.starship} init zsh | sed -E 's|/[^ ]*/bin/starship|${lib.getExe selfpkgs.starship}|g')"
+        eval "$(${lib.getExe selfpkgs.starship} init zsh | ${pkgs.gnused}/bin/sed -E 's|/[^ ]*/bin/starship|${lib.getExe selfpkgs.starship}|g')"
       '';
   };
 }

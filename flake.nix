@@ -2,23 +2,24 @@
   description = "ToppDev's Nix wrappers";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
-    hyprland.url = "github:hyprwm/Hyprland/v0.55.4";
+    # Consumed only as a source tree — wrappers/hyprland copies its files into
+    # the plugin directory — so `flake = false` is the honest declaration. It
+    # also drops the whole hyprland input this used to carry solely so that
+    # hyprsplit could `follows` it, and with it a dozen hypr* lock entries that
+    # every consumer inherited. The compositor itself comes from pkgs.hyprland.
     hyprsplit = {
       url = "github:shezdy/hyprsplit/main";
-      inputs.hyprland.follows = "hyprland";
+      flake = false;
     };
     # Replacement for hyprsplit
     # split-monitor-workspaces = {
     #   url = "github:zjeffer/split-monitor-workspaces/v0.55.4";
     #   inputs.hyprland.follows = "hyprland";
     # };
-
-    helix.url = "github:helix-editor/helix/master";
   };
 
   # Import all .nix files from current directory except flake.nix recursively
@@ -38,10 +39,12 @@
     inputs.flake-parts.lib.mkFlake
     {inherit inputs;}
     {
+      # aarch64 is deliberately out of scope: CI never built it, so exporting
+      # packages.aarch64-linux.* only published outputs that could break
+      # indefinitely without anything noticing.
       systems = [
         "x86_64-linux"
         # "x86_64-darwin"
-        "aarch64-linux"
         # "aarch64-darwin"
       ];
 
@@ -50,6 +53,26 @@
           inputs.wrapper-modules.flakeModules.default
         ]
         ++ importTree ./wrappers;
+
+      perSystem = {pkgs, ...}: {
+        # `nix fmt` in a repo that is uniformly alejandra-formatted.
+        formatter = pkgs.alejandra;
+
+        # Gives `nix flake check` something to check beyond evaluation. Only the
+        # .nix files are copied into the store, so touching an asset or the
+        # README does not invalidate it.
+        checks.formatting =
+          pkgs.runCommand "check-formatting" {
+            nativeBuildInputs = [pkgs.alejandra];
+            src = lib.fileset.toSource {
+              root = ./.;
+              fileset = fileFilter (file: file.hasExt "nix") ./.;
+            };
+          } ''
+            alejandra --check "$src"
+            touch "$out"
+          '';
+      };
 
       flake = {
         flakeModules.wrappers = {

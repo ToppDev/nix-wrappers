@@ -8,6 +8,10 @@
     selfpkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
     popuptmux = pkgs.writeShellApplication {
       name = "popuptmux";
+      # Run from the tmux server via run-shell, so the PATH is whatever the
+      # server was started with — the least reliable place to find a tool.
+      # panehost below already pins its own; these three did not.
+      runtimeInputs = [pkgs.tmux];
       text = ''
         current_path=$(tmux display-message -p -F "#{pane_current_path}")
         session_name=$(tmux display-message -p -F "#{session_name}")
@@ -20,6 +24,7 @@
     };
     popuptrash = pkgs.writeShellApplication {
       name = "popuptrash";
+      runtimeInputs = [pkgs.tmux];
       text = ''
         session_name=$(tmux display-message -p -F "#{session_name}")
         if [[ "$session_name" == trash ]]; then
@@ -31,6 +36,7 @@
     };
     popupgit = pkgs.writeShellApplication {
       name = "popupgit";
+      runtimeInputs = [pkgs.tmux selfpkgs.git pkgs.coreutils pkgs.gnused];
       text = ''
         current_path=$(tmux display-message -p -F "#{pane_current_path}")
         if [[ ! -d "$current_path/.git" && ! $(git -C "$current_path" rev-parse --git-dir 2> /dev/null) ]]; then
@@ -283,7 +289,12 @@
           ''
             set-environment -gu TMUX_PLUGIN_MANAGER_PATH
             set -g @sessionx-bind 'q'
-            set -g @sessionx-x-path "''${HOME}/Git"
+            # Overridable without editing this repo; the fallback is only a common
+            # layout, not an assumption that it exists. Split over two lines
+            # because tmux's parser knows ''${NAME} but no shell-style ''${NAME:-default},
+            # and a single invalid line makes it discard the whole config file.
+            set -g @sessionx-x-path "''${SESSIONX_X_PATH}"
+            if-shell -F '#{==:#{@sessionx-x-path},}' 'set -g @sessionx-x-path "''${HOME}/Git"'
             set -g @sessionx-window-height '85%'
             set -g @sessionx-window-width '75%'
             set -g @sessionx-zoxide-mode 'on'

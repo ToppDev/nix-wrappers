@@ -51,6 +51,7 @@
         pkgs.hyprland
         pkgs.systemd
         pkgs.brightnessctl
+        pkgs.procps # `pidof` in lock_cmd; without it the guard always fails and a second swaylock starts
         selfpkgs.swaylock
       ];
 

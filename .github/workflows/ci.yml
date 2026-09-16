@@ -29,7 +29,8 @@ jobs:
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
-      # No --all-systems: aarch64-linux is deliberately out of scope
+      # x86_64-linux is the only system in the flake, so there is nothing for
+      # --all-systems to add; aarch64 is deliberately out of scope.
       - run: nix flake check -L
 
   # The wrapper list is derived, not hardcoded, so a new wrappers/<tool>/ is
@@ -107,24 +108,21 @@ jobs:
           {
             inputs = {
               nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-              nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
               flake-parts.url = "github:hercules-ci/flake-parts";
               wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
-              # hyprland/hyprsplit are declared because the hyprland wrapper
-              # reads inputs.hyprsplit out of the *consumer's* inputs.
-              hyprland.url = "github:hyprwm/Hyprland/v0.55.4";
+              # hyprsplit is declared because the hyprland wrapper reads
+              # inputs.hyprsplit out of the *consumer's* inputs. Source tree only,
+              # matching how this flake declares it.
               hyprsplit = {
                 url = "github:shezdy/hyprsplit/main";
-                inputs.hyprland.follows = "hyprland";
+                flake = false;
               };
 
               wrappers = {
                 url = "github:ToppDev/nix-wrappers";
                 inputs.nixpkgs.follows = "nixpkgs";
-                inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-                inputs.hyprland.follows = "hyprland";
                 inputs.hyprsplit.follows = "hyprsplit";
               };
             };

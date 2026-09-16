@@ -21,7 +21,11 @@
 
     dynamicHyprlandScript = pkgs.writeShellApplication {
       name = "hyprland";
-      runtimeInputs = [pkgs.coreutils config.hyprlandPackage];
+      # wezterm and octave are named unqualified by the scratchpad workspace
+      # rules in settings.lua, which is a plain lua file and so cannot carry a
+      # store path. Children hyprland spawns inherit this PATH, so pinning them
+      # here is what makes those rules work outside this repo's own machines.
+      runtimeInputs = [pkgs.coreutils config.hyprlandPackage selfpkgs.wezterm pkgs.octave];
       text =
         # bash
         ''
@@ -79,7 +83,8 @@
           })
         ''
         (builtins.readFile ./settings.lua)
-        (import ./_keybinds.nix {inherit self pkgs lib;})
+        # The keybinds are a sibling module (keybinds.nix) rather than an
+        # import, so they go through the module system like everything else.
       ];
     };
   };

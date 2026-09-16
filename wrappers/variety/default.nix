@@ -1,6 +1,8 @@
 {self, ...}: {
   flake.wrappers.variety = {
     wlib,
+    lib,
+    config,
     pkgs,
     ...
   }: let
@@ -18,7 +20,35 @@
     });
   in {
     imports = [wlib.modules.default];
-    package = pkgs.writeShellApplication {
+
+    options = {
+      wallhavenApiKeyFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        example = "/run/secrets/variety/wallhaven-api-key";
+        description = ''
+          File holding a wallhaven API key, read at launch and written into
+          variety.conf. Null omits the injection.
+
+          A path rather than the key itself, so the secret never reaches the
+          store. Where it comes from is the consumer's business — this used to
+          name one particular deployment's secret layout.
+        '';
+      };
+      sourcesFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        example = "/run/secrets/variety/sources";
+        description = "File of additional variety sources, one per line. Null omits them.";
+      };
+      wallpaperDir = lib.mkOption {
+        type = lib.types.str;
+        default = "$HOME/Pictures/Wallpaper";
+        description = "Local folder added to variety as a source. Expanded by the shell at launch.";
+      };
+    };
+
+    config.package = pkgs.writeShellApplication {
       name = "variety";
       runtimeInputs = [varietyPkg pkgs.gnused pkgs.gnugrep pkgs.coreutils selfpkgs.changewallpaper];
       text = ''
@@ -26,9 +56,9 @@
         CFG_FILE="$CONFIG_DIR/variety.conf"
         SET_WP="$CONFIG_DIR/scripts/set_wallpaper"
 
-        # SOPS paths (ensure these match where sops-nix mounts them in your NixOS config)
-        WALLHAVEN_KEY_FILE="/run/secrets/variety.wallhaven_api_key"
-        SOURCES_FILE="/run/secrets/variety.sources"
+        WALLPAPER_DIR="${config.wallpaperDir}"
+        WALLHAVEN_KEY_FILE="${lib.optionalString (config.wallhavenApiKeyFile != null) config.wallhavenApiKeyFile}"
+        SOURCES_FILE="${lib.optionalString (config.sourcesFile != null) config.sourcesFile}"
 
         if [ -f "$CFG_FILE" ]; then
           # 1. Inject API Key
@@ -40,10 +70,10 @@
           fi
 
           # 2. Base local folder source
-          if ! grep -q -e "Pictures/Wallpaper" "$CFG_FILE"; then
+          if ! grep -q -e "$WALLPAPER_DIR" "$CFG_FILE"; then
             src=$(grep -o -e "^src[0-9]*" "$CFG_FILE" | tail -n1)
             idx=$(( ''${src:3} + 1 ))
-            sed -i "s|\(''${src}.*\)|\1\nsrc$idx = True|folder|$HOME/Pictures/Wallpaper|" "$CFG_FILE"
+            sed -i "s|\(''${src}.*\)|\1\nsrc$idx = True|folder|$WALLPAPER_DIR|" "$CFG_FILE"
           fi
 
           # 3. External sources from SOPS

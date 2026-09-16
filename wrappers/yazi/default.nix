@@ -50,6 +50,16 @@
     # Replaces `shellWrapperName = "y"`
     aliases = ["y"];
 
+    # Called by the openers and previewers below. Note pkgs.yaziPlugins.ouch is
+    # only the Lua plugin — the `ouch` binary the "Extract here" opener runs is
+    # a separate package, so archive preview worked while extracting did not.
+    runtimePkgs = with pkgs; [
+      ouch
+      xdg-utils # xdg-open
+      direnv
+      tmux
+    ];
+
     plugins = {
       ouch = pkgs.yaziPlugins.ouch;
       starship = pkgs.yaziPlugins.starship;

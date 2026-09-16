@@ -1,4 +1,7 @@
-@import url("file://@HOME@/.config/wlogout/colors.css");
+/* waybar's own wallust output, not wlogout's: changewallpaper appends the
+   @waybartext definition to this copy only, so importing the wlogout one left
+   every `color: @waybartext` rule below failing to parse. */
+@import url("file://@HOME@/.config/waybar/colors.css");
 
 @define-color background-color @color11;
 

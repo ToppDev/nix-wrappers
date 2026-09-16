@@ -29,7 +29,12 @@
     ];
 
     integration-yazi = scope: let
-      tmpfile = "/tmp/unique-file-hx-yazi";
+      # $XDG_RUNTIME_DIR rather than a fixed name in /tmp: that directory is
+      # 0700 and per user, so on a shared machine the first user to create the
+      # old path owned it and everyone else's `rm -f` then failed. Expanded by
+      # the shell each of these commands runs in. Written without braces on
+      # purpose — a `}` inside `%sh{...}` below would end the block early.
+      tmpfile = "$XDG_RUNTIME_DIR/hx-yazi-chooser";
     in [
       ":sh rm -f ${tmpfile}"
       ":insert-output env XDG_CONFIG_HOME=$HOME/.config ${lib.getExe selfpkgs.yazi} '${scope}' --chooser-file=${tmpfile}"
