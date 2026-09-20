@@ -8,7 +8,7 @@
     configFile = (pkgs.formats.yaml {}).generate "lazygit-config.yml" {
       git = {
         autoFetch = false;
-        overrideGpg = true;
+        overrideGpg = false;
         pagers = [
           {
             pager = "${pkgs.delta}/bin/delta --dark --paging=never --hyperlinks-file-link-format=\"lazygit-edit://{path}:{line}\"";
