@@ -160,6 +160,11 @@
         eval "$(${lib.getExe pkgs.fzf} --zsh)"
         eval "$(${lib.getExe pkgs.zoxide} init --cmd cd zsh)"
         eval "$(${lib.getExe pkgs.direnv} hook zsh)"
+        # Auto-activate a project's devenv on cd. Resolved off PATH, not pinned:
+        # this wrapper also runs standalone, where devenv is not bundled.
+        if (( $+commands[devenv] )); then
+          eval "$(devenv hook zsh)"
+        fi
 
         # Completions Initialization
         autoload -Uz compinit

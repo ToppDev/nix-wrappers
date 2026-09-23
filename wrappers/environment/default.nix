@@ -11,6 +11,7 @@
       statix # Lints and suggestions for the nix programming language
       alejandra # Uncompromising Nix Code Formatter
       nix-inspect # Interactive TUI for inspecting nix configs and other expressions
+      devenv # Per-project declarative development environments
       selfpkgs.nixos-rollback
 
       vim

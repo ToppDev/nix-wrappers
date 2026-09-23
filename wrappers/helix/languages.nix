@@ -17,6 +17,7 @@
       marksman
       alejandra
       nixd
+      devenv
       taplo
       # Python: the `python` language entry below names all three, so without
       # them helix reports "language server not found" and the auto-format
@@ -72,6 +73,16 @@
             ];
           };
         };
+        # Bundled nixd, pre-configured with devenv's nixpkgs and option set. No
+        # `config` here: helix sends it as initializationOptions, which would
+        # override what `devenv lsp` hands nixd and lose the devenv options.
+        devenv-lsp = {
+          command = "devenv";
+          args = ["lsp"];
+          # Only start in an actual devenv project — elsewhere it would bootstrap
+          # a .devenv directory in an unrelated repo
+          required-root-patterns = ["devenv.nix"];
+        };
         nixd = {
           config.nixd = {
             formatting.command = ["alejandra"];
@@ -123,7 +134,7 @@
           name = "nix";
           formatter.command = "alejandra";
           auto-format = true;
-          language-servers = ["nixd" "scls" "uwu-colors"];
+          language-servers = ["devenv-lsp" "nixd" "scls" "uwu-colors"];
         }
         {
           name = "cpp";
