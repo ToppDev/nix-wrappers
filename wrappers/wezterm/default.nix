@@ -31,6 +31,10 @@
 
       warn_about_missing_glyphs = false;
 
+      # Inline images via the kitty graphics protocol (off by default in
+      # WezTerm); used by Neovim's vim.ui.img and image-preview tools.
+      enable_kitty_graphics = true;
+
       # Workaround for
       # - https://github.com/NixOS/nixpkgs/issues/336069
       # - https://github.com/wez/wezterm/issues/5990
