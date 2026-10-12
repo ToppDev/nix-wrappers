@@ -85,8 +85,9 @@ jobs:
 
   # nix build only ever exercises this flake standalone. A downstream flake
   # instead imports flakeModules.wrappers into its own flake-parts tree, where
-  # self and inputs resolve against the consumer — that path is only covered
-  # by actually being consumed.
+  # self resolves against the consumer — that path is only covered by actually
+  # being consumed. The consumer declares no wrapper-specific inputs on purpose:
+  # the modules carry this flake's own, and this job proves it.
   consumer:
     name: Consumer flake
     runs-on: ubuntu-latest
@@ -112,23 +113,9 @@ jobs:
               flake-parts.url = "github:hercules-ci/flake-parts";
               wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
-              # hyprsplit is declared because the hyprland wrapper reads
-              # inputs.hyprsplit out of the *consumer's* inputs. Source tree only,
-              # matching how this flake declares it.
-              hyprsplit = {
-                url = "github:shezdy/hyprsplit/main";
-                flake = false;
-              };
-
-              # Same reason: the neovim wrapper reads its package from the
-              # consumer's inputs.neovim-nightly-overlay.
-              neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-
               wrappers = {
                 url = "github:ToppDev/nix-wrappers";
                 inputs.nixpkgs.follows = "nixpkgs";
-                inputs.hyprsplit.follows = "hyprsplit";
-                inputs.neovim-nightly-overlay.follows = "neovim-nightly-overlay";
               };
             };
 
@@ -165,6 +152,6 @@ jobs:
           # attrNames proves the module trees merged at all
           nix eval --json "${override[@]}" .#packages.x86_64-linux --apply 'builtins.attrNames'
           # forcing every drvPath proves each wrapper still evaluates when self
-          # and inputs point at the consumer rather than at this flake
+          # points at the consumer and it declares none of the wrappers' inputs
           nix eval --json "${override[@]}" .#packages.x86_64-linux \
             --apply 'builtins.mapAttrs (_: p: p.drvPath)' > /dev/null

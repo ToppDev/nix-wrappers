@@ -52,7 +52,9 @@ Public flake of standalone, declarative per-app wrappers. Dendritic flake-parts 
 
 This repo is consumed two different ways, and a change must keep both working:
 
-- As a **flake input**: the consumer imports `flakeModules.wrappers` and re-evaluates the whole module tree against its own `nixpkgs` and its own inputs, then merges its own `flake.wrappers.<tool>` declarations on top
+- As a **flake input**: the consumer imports `flakeModules.wrappers` and re-evaluates the whole module tree against its own `pkgs` and `self`, then merges its own `flake.wrappers.<tool>` declarations on top
+  - A module's `inputs` argument stays bound to **this** flake's inputs (`withOwnInputs` in `flake.nix`), so a wrapper may read any input declared here and consumers never have to declare it
+  - A consumer swaps one only via `inputs.wrappers.inputs.<name>.follows`
 - As a **direct run**: `nix run github:ToppDev/nix-wrappers#<tool>` builds `packages.<system>.<tool>` from this flake alone — nothing from any consumer is merged in
 
 Consequences a wrapper author must respect:

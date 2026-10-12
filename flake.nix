@@ -43,6 +43,27 @@
     # See https://github.com/vic/import-tree
     importTree = path:
       toList (fileFilter isNixModule path);
+
+    # Pins a module's `inputs` argument to this flake's own inputs. A consumer
+    # importing flakeModules.wrappers would otherwise hand the modules *its*
+    # inputs, forcing it to declare every input a wrapper reads. It can still
+    # override one through `inputs.<name>.follows` on this flake. `self` is left
+    # alone so selfpkgs keeps resolving to the consumer's merged packages.
+    withOwnInputs = file: let
+      module = import file;
+    in {
+      _file = file;
+      key = toString file;
+      imports = [
+        (
+          if lib.isFunction module
+          then lib.setFunctionArgs (args: module (args // {inherit inputs;})) (lib.functionArgs module)
+          else module
+        )
+      ];
+    };
+
+    wrapperModules = map withOwnInputs (importTree ./wrappers);
   in
     inputs.flake-parts.lib.mkFlake
     {inherit inputs;}
@@ -60,7 +81,7 @@
         [
           inputs.wrapper-modules.flakeModules.default
         ]
-        ++ importTree ./wrappers;
+        ++ wrapperModules;
 
       perSystem = {pkgs, ...}: {
         # `nix fmt` in a repo that is uniformly alejandra-formatted.
@@ -84,7 +105,7 @@
 
       flake = {
         flakeModules.wrappers = {
-          imports = importTree ./wrappers;
+          imports = wrapperModules;
         };
       };
     };
