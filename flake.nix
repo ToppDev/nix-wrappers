@@ -2,9 +2,17 @@
   description = "ToppDev's Nix wrappers";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    # For the few packages that need to track upstream faster than a release
+    # (devenv). Downstream flakes can `follows` their own unstable pin.
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
+    # Neovim built from the main branch, for features not yet in a release
+    # (native multicursor). nixpkgs is deliberately not followed: the overlay's
+    # own pin is what the nix-community binary cache builds against.
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     # Consumed only as a source tree — wrappers/hyprland copies its files into
     # the plugin directory — so `flake = false` is the honest declaration. It

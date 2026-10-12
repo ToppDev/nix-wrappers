@@ -1,4 +1,4 @@
-{...}: {
+{inputs, ...}: {
   flake.wrappers.helix = {
     pkgs,
     lib,
@@ -17,7 +17,7 @@
       marksman
       alejandra
       nixd
-      devenv
+      inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.devenv
       taplo
       # Python: the `python` language entry below names all three, so without
       # them helix reports "language server not found" and the auto-format

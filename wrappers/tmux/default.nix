@@ -75,7 +75,7 @@
     shell = lib.getExe selfpkgs.zsh;
     sourceSensible = true;
     statusKeys = "vi";
-    terminal = "xterm-256color";
+    terminal = "tmux-256color";
     vimVisualKeys = true;
     visualActivity = true;
 
@@ -85,7 +85,8 @@
       ''
         set-option -g set-titles on
         set-option -g set-titles-string "#S / #W / ${windowText}"
-        set-option -sa terminal-overrides ",xterm*:Tc" # 24-bit color support
+        set -as terminal-features ",xterm*:RGB" # 24-bit color support
+        set -g allow-passthrough on      # let images (kitty/sixel) reach the outer terminal
         set -g detach-on-destroy on      # don't exit from tmux when closing a session
         set -g renumber-windows on       # renumber all windows when any window is closed
         set -g set-clipboard on          # use system set-clipboard

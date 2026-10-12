@@ -1,6 +1,11 @@
-{self, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake.wrappers.environment = {pkgs, ...}: let
     selfpkgs = self.packages.${pkgs.stdenv.hostPlatform.system};
+    unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   in {
     imports = [self.wrapperModules.zsh];
     binName = "zsh";
@@ -11,7 +16,7 @@
       statix # Lints and suggestions for the nix programming language
       alejandra # Uncompromising Nix Code Formatter
       nix-inspect # Interactive TUI for inspecting nix configs and other expressions
-      devenv # Per-project declarative development environments
+      unstable.devenv # Per-project declarative development environments
       selfpkgs.nixos-rollback
 
       vim

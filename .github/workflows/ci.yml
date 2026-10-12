@@ -120,10 +120,15 @@ jobs:
                 flake = false;
               };
 
+              # Same reason: the neovim wrapper reads its package from the
+              # consumer's inputs.neovim-nightly-overlay.
+              neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
               wrappers = {
                 url = "github:ToppDev/nix-wrappers";
                 inputs.nixpkgs.follows = "nixpkgs";
                 inputs.hyprsplit.follows = "hyprsplit";
+                inputs.neovim-nightly-overlay.follows = "neovim-nightly-overlay";
               };
             };
 
