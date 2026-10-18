@@ -38,6 +38,35 @@ vim.lsp.enable {
   "openscad_lsp",
 }
 
+-- These configs compute `cmd` in a function so they can prefer a server from
+-- the project's node_modules/.bin, which skips Neovim's executable check and
+-- would raise a spawn error wherever the server is missing. Attach them only
+-- once the server is actually found, on PATH or in node_modules.
+local node_servers = {
+  ts_ls = "typescript-language-server",
+  eslint = "vscode-eslint-language-server",
+  jsonls = "vscode-json-language-server",
+  html = "vscode-html-language-server",
+  cssls = "vscode-css-language-server",
+  yamlls = "yaml-language-server",
+}
+for name, exe in pairs(node_servers) do
+  local base = vim.lsp.config[name]
+  vim.lsp.config(name, {
+    root_dir = function(bufnr, on_dir)
+      local function gate(root)
+        local in_project = root and vim.fn.executable(vim.fs.joinpath(root, "node_modules/.bin", exe)) == 1
+        if in_project or vim.fn.executable(exe) == 1 then on_dir(root) end
+      end
+      if type(base.root_dir) == "function" then
+        base.root_dir(bufnr, gate)
+      else
+        gate(base.root_dir or vim.fs.root(bufnr, base.root_markers or {}))
+      end
+    end,
+  })
+end
+
 -- [[ UI ]]
 vim.o.winborder = "rounded"
 vim.o.completeopt = "menuone,noselect,popup,fuzzy"
