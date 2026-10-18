@@ -77,6 +77,32 @@ vim.o.complete = "o,.^5,w^5,b^5"
 vim.o.completeopt = "menuone,noselect,popup,fuzzy"
 vim.o.completeitemalign = "kind,abbr,menu"
 
+-- The documentation window beside the menu would otherwise blend into the
+-- editor background; give it the menu's own background. LSP documentation
+-- arrives after the menu changes, and the window it opens is configured then,
+-- which shows up as an OptionSet for 'conceallevel'. The window id is only
+-- known once that returns, hence the scheduling.
+local function style_completion_info()
+  -- Asking for preview_winid alone returns an empty dict, so ask for a
+  -- second (cheap) field along with it
+  local win = vim.fn.complete_info({ "selected", "preview_winid" }).preview_winid
+  if win and vim.api.nvim_win_is_valid(win) then
+    vim.wo[win].winhighlight = "NormalFloat:Pmenu,EndOfBuffer:Pmenu"
+  end
+end
+local info_group = vim.api.nvim_create_augroup("UserCompletionInfo", { clear = true })
+vim.api.nvim_create_autocmd("CompleteChanged", {
+  group = info_group,
+  callback = vim.schedule_wrap(style_completion_info),
+})
+vim.api.nvim_create_autocmd("OptionSet", {
+  group = info_group,
+  pattern = "conceallevel",
+  callback = function()
+    if vim.fn.pumvisible() == 1 then vim.schedule(style_completion_info) end
+  end,
+})
+
 -- Only in file buffers: pickers, prompts and other plugin windows type into
 -- scratch buffers where a word menu just gets in the way
 vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
@@ -89,7 +115,10 @@ vim.o.foldlevelstart = 99
 
 vim.diagnostic.config {
   severity_sort = true,
-  virtual_text = { current_line = true },
+  -- Like helix: a short message at the end of every line except the cursor
+  -- line, where the full messages are laid out below it
+  virtual_text = { current_line = false },
+  virtual_lines = { current_line = true },
   float = { source = true },
 }
 
