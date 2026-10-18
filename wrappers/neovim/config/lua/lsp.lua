@@ -123,7 +123,9 @@ vim.diagnostic.config {
 }
 
 -- Applies to every client that advertises the capability, now and later.
--- Document colors are already on by default.
+-- Colors are only reported by servers that support documentColor (cssls,
+-- html, tailwindcss, tinymist…); shown as a swatch in front of the code.
+vim.lsp.document_color.enable(true, nil, { style = "virtual" })
 vim.lsp.inlay_hint.enable()
 vim.lsp.codelens.enable()
 vim.lsp.linked_editing_range.enable()
