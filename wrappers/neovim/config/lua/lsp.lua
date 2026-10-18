@@ -85,13 +85,9 @@ vim.lsp.codelens.enable()
 vim.lsp.linked_editing_range.enable()
 vim.lsp.on_type_formatting.enable()
 
--- Set `vim.g.autoformat = false` (or `vim.b.autoformat`) to stop formatting
--- on save.
-vim.g.autoformat = true
-
 -- [[ Per-client setup ]]
 -- Built-in defaults already cover grn, gra, grr, gri, grt, gO, K, <C-s> and
--- [d / ]d; only the gaps are mapped here.
+-- [d / ]d; only the gaps are mapped here. Formatting lives in plugins/format.lua.
 local group = vim.api.nvim_create_augroup("UserLsp", { clear = true })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -105,7 +101,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
     map("gd", vim.lsp.buf.definition, "Go to definition")
     map("gD", vim.lsp.buf.declaration, "Go to declaration")
-    map("<leader>lf", function() vim.lsp.buf.format { bufnr = bufnr } end, "Format buffer")
     map("<leader>ld", vim.diagnostic.open_float, "Line diagnostics")
     map("<leader>lr", "<cmd>lsp restart<CR>", "Restart language servers")
     map("<leader>lh", function()
@@ -122,20 +117,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.wo[win][0].foldmethod = "expr"
         vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
       end
-    end
-
-    -- One hook per buffer, however many clients attach (or reattach after a
-    -- restart); format() itself asks every client that supports it.
-    if client:supports_method("textDocument/formatting") then
-      vim.api.nvim_clear_autocmds { group = group, buffer = bufnr, event = "BufWritePre" }
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = group,
-        buffer = bufnr,
-        callback = function()
-          if vim.b[bufnr].autoformat == false or not vim.g.autoformat then return end
-          vim.lsp.buf.format { bufnr = bufnr, timeout_ms = 2000 }
-        end,
-      })
     end
   end,
 })

@@ -57,4 +57,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- plugin directory names under pack/*/opt, i.e. the nixpkgs pname.
 require("lze").load {
   { import = "plugins.ui" },
+  { import = "plugins.format" },
+  { import = "plugins.navigation" },
 }
