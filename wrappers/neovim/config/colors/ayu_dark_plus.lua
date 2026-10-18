@@ -155,6 +155,20 @@ local groups = {
   ["@markup.link.label"] = { fg = c.green },
   ["@markup.quote"] = { fg = c.yellow },
 
+  -- [[ Pickers ]] helix draws pickers on the editor background; the blue
+  -- popup background is for hover and documentation windows only
+  PickerNormal = { fg = c.foreground, bg = c.background },
+  PickerBorder = { fg = c.gray, bg = c.background },
+  PickerTitle = { fg = c.orange, bg = c.background, bold = true },
+  PickerCursorLine = { bg = c.dark_gray },
+  PickerMatch = { fg = c.orange, bold = true },
+  SnacksPicker = { link = "PickerNormal" },
+  SnacksPickerBorder = { link = "PickerBorder" },
+  SnacksPickerTitle = { link = "PickerTitle" },
+  SnacksPickerListCursorLine = { link = "PickerCursorLine" },
+  SnacksPickerPreviewCursorLine = { link = "CursorLine" },
+  SnacksPickerMatch = { link = "PickerMatch" },
+
   -- [[ Diagnostics and LSP ]]
   DiagnosticError = { fg = c.red, bold = true },
   DiagnosticWarn = { fg = c.warning, bold = true },

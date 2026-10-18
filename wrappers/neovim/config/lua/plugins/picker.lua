@@ -29,6 +29,15 @@ return {
       require("fff").setup {
         prompt = "> ",
         layout = { prompt_position = "top" },
+        -- Picker* groups come from the colorscheme
+        hl = {
+          normal = "PickerNormal",
+          border = "PickerBorder",
+          title = "PickerTitle",
+          cursor = "PickerCursorLine",
+          matched = "PickerMatch",
+          grep_match = "PickerMatch",
+        },
       }
     end,
   },
@@ -62,7 +71,12 @@ return {
     after = function()
       -- Only the picker; every other snacks module stays off
       require("snacks").setup {
-        picker = { enabled = true, ui_select = true },
+        picker = {
+          enabled = true,
+          ui_select = true,
+          -- No dimmed backdrop behind the picker, as in helix
+          layout = { layout = { backdrop = false } },
+        },
       }
     end,
   },
