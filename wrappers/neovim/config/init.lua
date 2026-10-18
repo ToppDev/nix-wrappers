@@ -33,6 +33,7 @@ vim.o.splitbelow = true
 vim.o.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
+require("treesitter")
 require("lsp")
 
 -- [[ Keymaps ]]
