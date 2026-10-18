@@ -75,6 +75,7 @@ vim.o.winborder = "rounded"
 vim.o.autocomplete = true
 vim.o.complete = "o,.^5,w^5,b^5"
 vim.o.completeopt = "menuone,noselect,popup,fuzzy"
+vim.o.completeitemalign = "kind,abbr,menu"
 
 -- Only in file buffers: pickers, prompts and other plugin windows type into
 -- scratch buffers where a word menu just gets in the way
@@ -153,7 +154,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method("textDocument/completion") then
       -- Trigger characters such as "." still ask the server directly; the
       -- integration also expands snippets and applies extra edits on accept
-      vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+      vim.lsp.completion.enable(true, client.id, bufnr, {
+        autotrigger = true,
+        -- The item kind as an icon, shown in front of the text
+        convert = function(item)
+          local kind = vim.lsp.protocol.CompletionItemKind[item.kind]
+          if not kind then return {} end
+          local icon, hl = require("mini.icons").get("lsp", kind:lower())
+          return { kind = icon, kind_hlgroup = hl }
+        end,
+      })
       vim.keymap.set("i", "<C-Space>", vim.lsp.completion.get, { buffer = bufnr, desc = "Complete" })
       -- The server already offers this buffer's identifiers; scanning it too
       -- would list each of them twice

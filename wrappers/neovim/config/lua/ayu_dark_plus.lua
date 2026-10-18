@@ -20,8 +20,6 @@ return {
   linenr = "#5c6773",
   linenr_cur = "#9da3ab",
   cursorline = "#252933",
-  popup_fg = "#7b91b3",
-  popup = "#16203b",
   menu = "#1f2430",
   lavender = "#b4befe",
   warning = "#ffed29",

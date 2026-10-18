@@ -11,9 +11,11 @@ local c = require "ayu_dark_plus"
 local groups = {
   -- [[ Editor UI ]]
   Normal = { fg = c.foreground, bg = c.background },
-  NormalFloat = { fg = c.popup_fg, bg = c.popup },
-  FloatBorder = { fg = c.popup_fg, bg = c.popup },
-  FloatTitle = { fg = c.orange, bg = c.popup, bold = true },
+  -- Floating windows (hover, documentation, which-key…) share the picker
+  -- look instead of helix's blue ui.popup
+  NormalFloat = { link = "PickerNormal" },
+  FloatBorder = { link = "PickerBorder" },
+  FloatTitle = { link = "PickerTitle" },
   Cursor = { fg = c.dark_gray, bg = c.orange },
   lCursor = { link = "Cursor" },
   CursorLine = { bg = c.cursorline },
@@ -136,8 +138,7 @@ local groups = {
   GitSignsUntracked = { fg = c.gray },
   GitSignsCurrentLineBlame = { fg = c.gray, italic = true },
 
-  -- [[ Pickers ]] helix draws pickers on the editor background; the blue
-  -- popup background is for hover and documentation windows only
+  -- [[ Pickers ]] on the editor background, as helix draws its pickers
   PickerNormal = { fg = c.foreground, bg = c.background },
   PickerBorder = { fg = c.gray, bg = c.background },
   PickerTitle = { fg = c.orange, bg = c.background, bold = true },
