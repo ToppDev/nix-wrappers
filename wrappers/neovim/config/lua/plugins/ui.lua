@@ -5,6 +5,7 @@ return {
     after = function()
       require("which-key").setup {
         spec = {
+          { "<leader>c", group = "Conflict" },
           { "<leader>f", group = "Find" },
           { "<leader>g", group = "Git" },
           { "<leader>l", group = "LSP" },

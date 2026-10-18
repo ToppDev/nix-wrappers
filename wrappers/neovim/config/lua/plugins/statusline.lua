@@ -66,6 +66,14 @@ return {
             {
               "diagnostics",
               symbols = { error = " ", warn = " ", info = " ", hint = "󰌵 " },
+              -- Hidden while the file has merge conflicts (lua/conflict.lua)
+              cond = function() return (vim.b.conflict_count or 0) == 0 end,
+            },
+            {
+              -- Merge conflicts left in the file (lua/conflict.lua)
+              function() return " " .. vim.b.conflict_count end,
+              cond = function() return (vim.b.conflict_count or 0) > 0 end,
+              color = { fg = c.red, gui = "bold" },
             },
           },
           lualine_c = {

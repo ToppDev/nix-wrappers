@@ -138,6 +138,14 @@ local groups = {
   GitSignsUntracked = { fg = c.gray },
   GitSignsCurrentLineBlame = { fg = c.gray, italic = true },
 
+  -- [[ Merge conflicts ]] tints of green (ours), blue (theirs) and magenta
+  -- (base) over the editor background
+  ConflictOurs = { bg = "#1c2a19" },
+  ConflictTheirs = { bg = "#14243a" },
+  ConflictBase = { bg = "#272233" },
+  ConflictMarker = { fg = c.gray, bg = c.black, bold = true },
+  ConflictLabel = { fg = c.orange, italic = true },
+
   -- [[ Pickers ]] on the editor background, as helix draws its pickers
   PickerNormal = { fg = c.foreground, bg = c.background },
   PickerBorder = { fg = c.gray, bg = c.background },

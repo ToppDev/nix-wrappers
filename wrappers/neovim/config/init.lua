@@ -35,6 +35,7 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 require("treesitter")
 require("lsp")
+require("conflict")
 
 -- [[ Keymaps ]]
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
