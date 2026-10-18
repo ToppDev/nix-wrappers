@@ -69,7 +69,21 @@ end
 
 -- [[ UI ]]
 vim.o.winborder = "rounded"
+-- Completion menu while typing: language servers first (through
+-- 'omnifunc'), then words from the current and other open buffers. CTRL-Y
+-- accepts, CTRL-N / CTRL-P move, CTRL-E dismisses.
+vim.o.autocomplete = true
+vim.o.complete = "o,.^5,w^5,b^5"
 vim.o.completeopt = "menuone,noselect,popup,fuzzy"
+
+-- Only in file buffers: pickers, prompts and other plugin windows type into
+-- scratch buffers where a word menu just gets in the way
+vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
+  group = vim.api.nvim_create_augroup("UserAutocomplete", { clear = true }),
+  callback = function(args)
+    vim.bo[args.buf].autocomplete = vim.bo[args.buf].buftype == ""
+  end,
+})
 vim.o.foldlevelstart = 99
 
 vim.diagnostic.config {
@@ -137,7 +151,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end, "Toggle inlay hints")
 
     if client:supports_method("textDocument/completion") then
+      -- Trigger characters such as "." still ask the server directly; the
+      -- integration also expands snippets and applies extra edits on accept
       vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+      vim.keymap.set("i", "<C-Space>", vim.lsp.completion.get, { buffer = bufnr, desc = "Complete" })
+      -- The server already offers this buffer's identifiers; scanning it too
+      -- would list each of them twice
+      vim.bo[bufnr].complete = "o,w^5,b^5"
     end
 
     if client:supports_method("textDocument/foldingRange") then

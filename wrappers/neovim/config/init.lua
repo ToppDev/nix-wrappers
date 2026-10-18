@@ -61,4 +61,5 @@ require("lze").load {
   { import = "plugins.navigation" },
   { import = "plugins.picker" },
   { import = "plugins.git" },
+  { import = "plugins.statusline" },
 }
