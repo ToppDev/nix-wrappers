@@ -176,6 +176,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("gO", pick "lsp_symbols", "Document symbols")
     map("<leader>ld", vim.diagnostic.open_float, "Line diagnostics")
     map("<leader>lr", "<cmd>lsp restart<CR>", "Restart language servers")
+    map("<leader>lc", vim.lsp.codelens.run, "Run code lens on line")
     map("<leader>lh", function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
     end, "Toggle inlay hints")
