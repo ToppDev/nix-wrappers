@@ -13,6 +13,7 @@ vim.o.scrolloff = 8
 vim.o.colorcolumn = "101"
 vim.o.mouse = "a"
 vim.o.termguicolors = true
+vim.cmd.colorscheme "ayu_dark_plus" -- port of the helix theme
 
 vim.o.expandtab = true
 vim.o.shiftwidth = 2
