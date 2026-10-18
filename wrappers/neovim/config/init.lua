@@ -59,4 +59,5 @@ require("lze").load {
   { import = "plugins.ui" },
   { import = "plugins.format" },
   { import = "plugins.navigation" },
+  { import = "plugins.picker" },
 }

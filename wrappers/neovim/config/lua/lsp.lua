@@ -86,8 +86,8 @@ vim.lsp.linked_editing_range.enable()
 vim.lsp.on_type_formatting.enable()
 
 -- [[ Per-client setup ]]
--- Built-in defaults already cover grn, gra, grr, gri, grt, gO, K, <C-s> and
--- [d / ]d; only the gaps are mapped here. Formatting lives in plugins/format.lua.
+-- Built-in defaults stay for grn, gra, K, <C-s> and [d / ]d; the location
+-- lists are moved into the picker. Formatting lives in plugins/format.lua.
 local group = vim.api.nvim_create_augroup("UserLsp", { clear = true })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -99,8 +99,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local function map(lhs, rhs, desc)
       vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = desc })
     end
-    map("gd", vim.lsp.buf.definition, "Go to definition")
-    map("gD", vim.lsp.buf.declaration, "Go to declaration")
+    -- Navigation lists go through snacks.picker (plugins/picker.lua)
+    local function pick(source)
+      return function() require("snacks").picker[source]() end
+    end
+    map("gd", pick "lsp_definitions", "Go to definition")
+    map("gD", pick "lsp_declarations", "Go to declaration")
+    map("grr", pick "lsp_references", "References")
+    map("gri", pick "lsp_implementations", "Implementations")
+    map("grt", pick "lsp_type_definitions", "Type definitions")
+    map("gO", pick "lsp_symbols", "Document symbols")
     map("<leader>ld", vim.diagnostic.open_float, "Line diagnostics")
     map("<leader>lr", "<cmd>lsp restart<CR>", "Restart language servers")
     map("<leader>lh", function()
