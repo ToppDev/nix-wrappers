@@ -63,10 +63,11 @@ return {
       { "<leader>fj", snacks "jumps", desc = "Jumps" },
       { "<leader>fq", snacks "qflist", desc = "Quickfix list" },
       { "<leader>f\"", snacks "registers", desc = "Registers" },
-      { "<leader>gs", snacks "git_status", desc = "Git status" },
+      -- <leader>g otherwise belongs to gitsigns (plugins/git.lua)
+      { "<leader>gf", snacks "git_status", desc = "Changed files" },
       { "<leader>gl", snacks "git_log", desc = "Git log" },
       { "<leader>gL", snacks "git_log_file", desc = "Git log for file" },
-      { "<leader>gb", snacks "git_branches", desc = "Git branches" },
+      { "<leader>gc", snacks "git_branches", desc = "Checkout branch" },
     },
     after = function()
       -- Only the picker; every other snacks module stays off

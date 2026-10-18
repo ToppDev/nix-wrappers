@@ -90,6 +90,27 @@ vim.lsp.on_type_formatting.enable()
 -- lists are moved into the picker. Formatting lives in plugins/format.lua.
 local group = vim.api.nvim_create_augroup("UserLsp", { clear = true })
 
+-- Document highlights live as extmarks in this namespace
+local references_ns = vim.api.nvim_create_namespace "nvim.lsp.references"
+
+local function reference_at_cursor()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local pos = { row - 1, col }
+  return vim.api.nvim_buf_get_extmarks(0, references_ns, pos, pos, { overlap = true })
+end
+
+local function jump_reference(dir)
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local marks = vim.api.nvim_buf_get_extmarks(0, references_ns, 0, -1, {})
+  for i = dir > 0 and 1 or #marks, dir > 0 and #marks or 1, dir do
+    local r, c = marks[i][2] + 1, marks[i][3]
+    if (r - row) * dir > 0 or (r == row and (c - col) * dir > 0) then
+      vim.api.nvim_win_set_cursor(0, { r, c })
+      return
+    end
+  end
+end
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = group,
   callback = function(args)
@@ -125,6 +146,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.wo[win][0].foldmethod = "expr"
         vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
       end
+    end
+
+    -- Highlight other references to the symbol under the cursor once it rests.
+    -- They stay while the cursor moves among them, so ]r / [r can walk them.
+    if client:supports_method("textDocument/documentHighlight") then
+      vim.api.nvim_clear_autocmds {
+        group = group,
+        buffer = bufnr,
+        event = { "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI" },
+      }
+      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        group = group,
+        buffer = bufnr,
+        callback = vim.lsp.buf.document_highlight,
+      })
+      vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+        group = group,
+        buffer = bufnr,
+        callback = function()
+          if #reference_at_cursor() == 0 then vim.lsp.buf.clear_references() end
+        end,
+      })
+      map("]r", function() jump_reference(1) end, "Next reference")
+      map("[r", function() jump_reference(-1) end, "Previous reference")
     end
   end,
 })

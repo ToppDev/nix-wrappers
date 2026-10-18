@@ -60,4 +60,5 @@ require("lze").load {
   { import = "plugins.format" },
   { import = "plugins.navigation" },
   { import = "plugins.picker" },
+  { import = "plugins.git" },
 }

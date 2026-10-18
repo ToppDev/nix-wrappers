@@ -155,6 +155,13 @@ local groups = {
   ["@markup.link.label"] = { fg = c.green },
   ["@markup.quote"] = { fg = c.yellow },
 
+  -- [[ Git signs ]] helix's diff gutter colors, without a background
+  GitSignsAdd = { fg = c.green },
+  GitSignsChange = { fg = c.yellow },
+  GitSignsDelete = { fg = c.red },
+  GitSignsUntracked = { fg = c.gray },
+  GitSignsCurrentLineBlame = { fg = c.gray, italic = true },
+
   -- [[ Pickers ]] helix draws pickers on the editor background; the blue
   -- popup background is for hover and documentation windows only
   PickerNormal = { fg = c.foreground, bg = c.background },
