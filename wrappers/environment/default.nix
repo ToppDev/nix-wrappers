@@ -37,6 +37,8 @@
       glow
       just
       zoxide
+      zellij # Terminal workspace with batteries included
+      unstable.herdr # Agent multiplexer that lives in your terminal
 
       # wrapped
       selfpkgs.bat
