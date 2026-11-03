@@ -1,0 +1,73 @@
+name: Update flake.lock
+
+on:
+  workflow_dispatch:
+  schedule:
+    #       /--------- Minute [0,59]
+    #       | /------- Hour [0,23] in UTC
+    #       | | /----- Day of the month [1,31]
+    #       | | | /--- Month of the year [1,12]
+    #       | | | | /- Day of the week ([0,6] with 0=Sunday)
+    - cron: 0 18 * * 6 # Saturday evening, so a full build wave lands well before consumers' weekend lock bumps
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false # a running bump must finish or fail on its own, never be half-applied
+
+jobs:
+  # The bump is pushed to a side branch first, so the CI pipeline can check it
+  # out by commit without main ever holding an untested lock.
+  update:
+    name: Update lock
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    outputs:
+      sha: ${{ steps.commit.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - run: nix flake update
+      - name: Commit to the update branch
+        id: commit
+        run: |
+          if git diff --quiet -- flake.lock; then
+            echo "lock unchanged — nothing to test"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update flake.lock" -- flake.lock
+          git push --force origin HEAD:refs/heads/update-flake-lock
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  ci:
+    name: CI
+    needs: update
+    if: needs.update.outputs.sha != ''
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: ${{ needs.update.outputs.sha }}
+
+  # Only reached when every CI job passed. A plain push is a fast-forward or
+  # nothing: if main moved meanwhile it is rejected and the next run retries
+  # on top of the new main.
+  merge:
+    name: Fast-forward main
+    needs: [update, ci]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: update-flake-lock
+          fetch-depth: 0
+      - run: |
+          git push origin "${{ needs.update.outputs.sha }}:refs/heads/main"
+          git push origin --delete update-flake-lock

@@ -68,6 +68,7 @@ Consequences a wrapper author must respect:
 - A GitHub Actions workflow builds every wrapper on `x86_64-linux`, one job per wrapper
 - A separate job consumes the flake as an input and evaluates it, covering the flake-input path
 - Both jobs run on every push and pull request
+- A weekly workflow bumps `flake.lock` on a side branch, runs the full CI pipeline against it and fast-forwards `main` only if everything passed
 - `aarch64-linux` is deliberately out of scope
 
 ## Verify changes
