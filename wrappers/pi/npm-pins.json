@@ -1,0 +1,133 @@
+[
+  {
+    "name": "pi-plan-mode",
+    "package": "@narumitw/pi-plan-mode",
+    "description": "Codex-like read-only /plan mode",
+    "version": "0.60.0",
+    "url": "https://registry.npmjs.org/@narumitw/pi-plan-mode/-/pi-plan-mode-0.60.0.tgz",
+    "hash": "sha512-ea+KiLQo4P3tn5Orp/l8sdsvSXjq+Ws3032hakwh9bse0TkONjDpAXPrgww2ppL9XE1jE1kson6jr0jHxpD1kQ==",
+    "npmDepsHash": "sha256-CDgp8CzohY+rEB/lMQHE5uhMIR1ylVOKH3sAH20u1Ak="
+  },
+  {
+    "name": "pi-powerline-footer",
+    "package": "pi-powerline-footer",
+    "description": "Powerline status bar",
+    "version": "0.22.0",
+    "url": "https://registry.npmjs.org/pi-powerline-footer/-/pi-powerline-footer-0.22.0.tgz",
+    "hash": "sha512-DTcAlgiHEa+/6JdYHfxMwlnoBK+//s14LXLHekyONKae45OD0Tk6QaGIpnWP9+Ftg2k3VQOT+kJoTxalTEGT3Q=="
+  },
+  {
+    "name": "pi-subagents",
+    "package": "pi-subagents",
+    "description": "Delegation to child agents and scripted multi-agent workflows",
+    "version": "0.87.0",
+    "url": "https://registry.npmjs.org/pi-subagents/-/pi-subagents-0.87.0.tgz",
+    "hash": "sha512-+XjSB0xEUqrvodRh3bSQGj5/DqCfI/bLlYb0PYfBPFR757S/oOGTWA6uAAOsg3SqAu2ZYyH04Up2Zbi6q4OPMA==",
+    "npmDepsHash": "sha256-6tFqGoccoHtxHIpLntRVYOKGYfpcbIOv8QNZLwBac3c="
+  },
+  {
+    "name": "pi-prompt-template-model",
+    "package": "pi-prompt-template-model",
+    "description": "model/skill/thinking frontmatter for prompt templates, delegates through pi-subagents",
+    "version": "0.12.3",
+    "url": "https://registry.npmjs.org/pi-prompt-template-model/-/pi-prompt-template-model-0.12.3.tgz",
+    "hash": "sha512-wc8kI8GZgyyOkSjZhAPeWcSzXBfAI9oOJexmPAmxiK1WE8EJ5O6YFdkYiT5elYEGUuTxwekGtgrGBN9CULSCfQ==",
+    "npmDepsHash": "sha256-44YouE4n0SKrBxw9eYNbwB6A+E8OkiUHmLJi+s/f8OQ="
+  },
+  {
+    "name": "rpiv-todo",
+    "package": "@juicesharp/rpiv-todo",
+    "description": "Todo list for the model as a live overlay",
+    "version": "2.15.0",
+    "url": "https://registry.npmjs.org/@juicesharp/rpiv-todo/-/rpiv-todo-2.15.0.tgz",
+    "hash": "sha512-8WfYssdgQgSWzFNsRzdw5Z6ZJIjO2ecM/YqEzYpR/ore+Hh5aNmafGVy94uFbIofAv2wGGitx5e3J/ucRrViXQ==",
+    "npmDepsHash": "sha256-sjdMY3ckkuP6Ch/LK+6880QslDzFSgrDaeBfANuYj6U="
+  },
+  {
+    "name": "rpiv-ask-user-question",
+    "package": "@juicesharp/rpiv-ask-user-question",
+    "description": "Structured multiple-choice questions to the user instead of guessing",
+    "version": "2.15.0",
+    "url": "https://registry.npmjs.org/@juicesharp/rpiv-ask-user-question/-/rpiv-ask-user-question-2.15.0.tgz",
+    "hash": "sha512-Gm6de5IZF52BaSeh9dnDqJBn821Z5XfJkCmhkCmqTzvNv3SCpSv1mA4Gj5VBcfrSe+xTtWSVQzJwIqJFQHH3Lg==",
+    "npmDepsHash": "sha256-5PBMn+Y8ZK/7DJ+mfHS13J8xu+kpZXSzsCLaXvoeAPQ="
+  },
+  {
+    "name": "pi-btw",
+    "package": "pi-btw",
+    "description": "/btw side conversation while the main agent keeps working",
+    "version": "0.8.1",
+    "url": "https://registry.npmjs.org/pi-btw/-/pi-btw-0.8.1.tgz",
+    "hash": "sha512-Aol1JFiillvkAjtv4elc9sVg8Cb8XqIvEsPUMm4AD4csLELHrqvcRqCEJxAH4oLFYjxJ3uHO+sPYz1BD1B6o9A=="
+  },
+  {
+    "name": "pi-web-access",
+    "package": "pi-web-access",
+    "description": "Web search, fetching and content extraction",
+    "version": "0.47.0",
+    "url": "https://registry.npmjs.org/pi-web-access/-/pi-web-access-0.47.0.tgz",
+    "hash": "sha512-Z176wTJjHw9Y+NpZ3WxOmKnh/7Sy3mu4QR05nBS/v6GRd5Cp7g5GnLIzI9LOT1IdR1105qXFS+L3LBUfkOMy8g==",
+    "npmDepsHash": "sha256-bR8du8Jfpbaz7QNmwyzRt5SGNxZSndTbQMfYMkar8HE="
+  },
+  {
+    "name": "pi-interactive-shell",
+    "package": "pi-interactive-shell",
+    "description": "Interactive CLIs in an observable overlay the user can take over",
+    "version": "0.18.0",
+    "url": "https://registry.npmjs.org/pi-interactive-shell/-/pi-interactive-shell-0.18.0.tgz",
+    "hash": "sha512-aSF1yo3U5q52F1WdKmqHV82DpxgIkoDtgq7aLL6GO+Gv/3yk59XDyjVxnJtMQ75f2CtvOn5SKc/N/3Ps9smo2w==",
+    "npmDepsHash": "sha256-iJ58YBWLNlXCGmYrQdjpGWqQqJGGuANgE75q5mPpJO0="
+  },
+  {
+    "name": "pi-hermes-memory",
+    "package": "pi-hermes-memory",
+    "description": "Persistent memory and session search in local SQLite",
+    "version": "0.10.0",
+    "url": "https://registry.npmjs.org/pi-hermes-memory/-/pi-hermes-memory-0.10.0.tgz",
+    "hash": "sha512-H0q2jTsyBcp0Q85eZFABke2gFId646pHkkgp2YqSMCumyTWxndsTtmdX1e97OW5nh+mu/SMRYLnxNlO9zLfutw==",
+    "npmDepsHash": "sha256-nKH5ptPLp9/E8Xdsb4bSgErBQAppavyWTJk53NCClEk="
+  },
+  {
+    "name": "pi-lens",
+    "package": "pi-lens",
+    "description": "Live LSP, linter, formatter and type-check feedback",
+    "version": "4.4.10",
+    "url": "https://registry.npmjs.org/pi-lens/-/pi-lens-4.4.10.tgz",
+    "hash": "sha512-H5vW3we1gf19c6k4e8yB1/2y3MCykgOg4UT/RH0xQ7f6/bbrQhhQ1VwHgEwexNErn+VZZZcCngIt4o3YGm6wvw==",
+    "npmDepsHash": "sha256-5nTZOD3bqn5uQx/gJ51/svUEg/Y6bxcjaFTecjeSlvM="
+  },
+  {
+    "name": "pi-add-dir",
+    "package": "@henryqw/pi-add-dir",
+    "description": "/add-dir for context, skills and file search outside the cwd",
+    "version": "3.4.0",
+    "url": "https://registry.npmjs.org/@henryqw/pi-add-dir/-/pi-add-dir-3.4.0.tgz",
+    "hash": "sha512-MBb/AJLyLJyRCBTFW6WdotnRsz9qXuqmkV0SKWzhKakIRV8Rq6VxL5NhgIv7RCImuNYG5RhWTjKotLQsUEVFDg==",
+    "npmDepsHash": "sha256-6oX5pCWGfoeJn9BsZWrRfx/PhuBeqW61mrYNm0KE2yI="
+  },
+  {
+    "name": "pi-simplify",
+    "package": "pi-simplify",
+    "description": "/simplify review of recently changed code",
+    "version": "0.2.3",
+    "url": "https://registry.npmjs.org/pi-simplify/-/pi-simplify-0.2.3.tgz",
+    "hash": "sha512-9dxsXiGmO7DmjguC4Bk/lu7IYlYt0x1m2VneUpIGSQspx4BtshBgt+Vb8xvoxXc/Ugif7/sdwcbf7TgULqiSHg=="
+  },
+  {
+    "name": "pi-claude-bridge",
+    "package": "pi-claude-bridge",
+    "description": "Claude Code via the Agent SDK as a model provider",
+    "version": "0.11.0",
+    "url": "https://registry.npmjs.org/pi-claude-bridge/-/pi-claude-bridge-0.11.0.tgz",
+    "hash": "sha512-ojLuXl++12T2QcQ5PjRzzdpS9R4cq1fp+PsRDMXmB3fukxTIE7rQXpmwSajV7EGxiZmPHOuGPaa+79DQO9Q01w==",
+    "npmDepsHash": "sha256-qksmudilNxEYJi3rCLNN3o1JLKWSx7Uk0r8wPAsZaSs="
+  },
+  {
+    "name": "pi-raw-paste",
+    "package": "@tmustier/pi-raw-paste",
+    "description": "/paste for one raw, fully editable paste",
+    "version": "0.1.3",
+    "url": "https://registry.npmjs.org/@tmustier/pi-raw-paste/-/pi-raw-paste-0.1.3.tgz",
+    "hash": "sha512-HIvXl9s4Mnqxok3M4tqfeItzVlBggrull2fP+zihKMuWiMYW59Lc4ouz0m/bHOKMvWzkLU2CeG31SAmutnKTvw=="
+  }
+]

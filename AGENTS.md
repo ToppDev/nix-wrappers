@@ -69,6 +69,11 @@ Consequences a wrapper author must respect:
 - A separate job consumes the flake as an input and evaluates it, covering the flake-input path
 - Both jobs run on every push and pull request
 - A weekly workflow bumps `flake.lock` on a side branch, runs the full CI pipeline against it and fast-forwards `main` only if everything passed
+- A weekly workflow opens one PR per new release of an npm package pinned in a `wrappers/<tool>/npm-pins.json`
+  - Use it for third-party code that should be reviewed before it lands, rather than a flake input the lock bump moves silently
+  - The file is plain data that `scripts/update-npm-pins.sh` rewrites, together with a generated lock per package under `npm-locks/`. Build fixes belong in the wrapper's Nix code
+  - To add a package, append an entry with an empty `version` and run the script with `--all` (it needs `nodejs` and `prefetch-npm-deps`)
+  - It dispatches CI on the PR branch itself, since a PR opened with `GITHUB_TOKEN` triggers no workflows
 - `aarch64-linux` is deliberately out of scope
 
 ## Verify changes

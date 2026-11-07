@@ -1,0 +1,106 @@
+name: Update npm pins
+
+on:
+  workflow_dispatch:
+  schedule:
+    #       /--------- Minute [0,59]
+    #       | /------- Hour [0,23] in UTC
+    #       | | /----- Day of the month [1,31]
+    #       | | | /--- Month of the year [1,12]
+    #       | | | | /- Day of the week ([0,6] with 0=Sunday)
+    - cron: 0 6 * * 0 # Sunday morning, after the Saturday lock bump has settled
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  # Unlike flake inputs these are never bumped silently: each new release of a
+  # package in a wrappers/<tool>/npm-pins.json becomes its own PR, so
+  # third-party code is reviewed before it lands.
+  find:
+    name: Find new releases
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      updates: ${{ steps.scan.outputs.updates }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Compare pins with the latest releases
+        id: scan
+        run: |
+          updates="$(nix shell --inputs-from . nixpkgs-unstable#nodejs nixpkgs-unstable#prefetch-npm-deps \
+            -c scripts/update-npm-pins.sh --list)"
+          echo "$updates"
+          echo "updates=$updates" >> "$GITHUB_OUTPUT"
+
+  pr:
+    name: PR ${{ matrix.entry }}
+    needs: find
+    if: needs.find.outputs.updates != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write # dispatching CI on the PR branch
+    strategy:
+      fail-fast: false
+      matrix:
+        entry: ${{ fromJSON(needs.find.outputs.updates) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Bump the pin
+        id: bump
+        env:
+          ENTRY: ${{ matrix.entry }}
+        run: |
+          file="wrappers/${ENTRY%%/*}/npm-pins.json"
+          read_pin() { jq -r --arg n "${ENTRY#*/}" ".[] | select(.name == \$n) | $1" "$file"; }
+          old="$(read_pin .version)"
+          nix shell --inputs-from . nixpkgs-unstable#nodejs nixpkgs-unstable#prefetch-npm-deps \
+            -c scripts/update-npm-pins.sh "$ENTRY"
+          pkg="$(read_pin .package)"
+          new="$(read_pin .version)"
+          repo="$(curl -sf "https://registry.npmjs.org/${pkg/\//%2F}/$new" | jq -r '.repository.url // .repository // ""' \
+            | sed -E 's#^git\+##; s#\.git$##; s#^git://#https://#')"
+          {
+            echo "pkg=$pkg"
+            echo "old=$old"
+            echo "new=$new"
+            echo "repo=$repo"
+          } >> "$GITHUB_OUTPUT"
+      # One fixed branch per pin, so a newer release while the PR is still open
+      # updates that PR instead of opening a second one. The branch is rebuilt
+      # from main on every run, which also clears conflicts between pin PRs.
+      - name: Open or update the PR
+        id: pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update-pin/${{ matrix.entry }}
+          delete-branch: true
+          commit-message: "${{ matrix.entry }} ${{ steps.bump.outputs.old }} -> ${{ steps.bump.outputs.new }}"
+          title: "${{ matrix.entry }} ${{ steps.bump.outputs.old }} -> ${{ steps.bump.outputs.new }}"
+          body: |
+            New release of [`${{ steps.bump.outputs.pkg }}`](https://www.npmjs.com/package/${{ steps.bump.outputs.pkg }}) (source: ${{ steps.bump.outputs.repo }}).
+
+            **Review what actually ships before merging** — the wrapper runs the published tarball, not the git repo:
+
+            - Diff of the published tarballs: https://npmdiff.dev/${{ steps.bump.outputs.pkg }}/${{ steps.bump.outputs.old }}/${{ steps.bump.outputs.new }}/
+            - Or locally: `npm diff --diff=${{ steps.bump.outputs.pkg }}@${{ steps.bump.outputs.old }} --diff=${{ steps.bump.outputs.pkg }}@${{ steps.bump.outputs.new }}`
+            - Changes to the generated `npm-locks/` file are the dependency updates that come with it
+      # A PR opened with GITHUB_TOKEN triggers no pull_request workflows, but a
+      # workflow_dispatch it sends still runs, and its checks land on the PR's head commit
+      - name: Run CI on the PR branch
+        if: steps.pr.outputs.pull-request-operation == 'created' || steps.pr.outputs.pull-request-operation == 'updated'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci.yml --ref "update-pin/${{ matrix.entry }}"
