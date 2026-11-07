@@ -138,5 +138,47 @@
     "version": "0.1.3",
     "url": "https://registry.npmjs.org/@tmustier/pi-raw-paste/-/pi-raw-paste-0.1.3.tgz",
     "hash": "sha512-HIvXl9s4Mnqxok3M4tqfeItzVlBggrull2fP+zihKMuWiMYW59Lc4ouz0m/bHOKMvWzkLU2CeG31SAmutnKTvw=="
+  },
+  {
+    "name": "cc-safety-net",
+    "package": "cc-safety-net",
+    "description": "Blocks destructive commands and secret file access",
+    "version": "2.7.4",
+    "url": "https://registry.npmjs.org/cc-safety-net/-/cc-safety-net-2.7.4.tgz",
+    "hash": "sha512-KgHO8KpdbkEYXBwLXzW3TMTYaYFysIH11J4OrmgzNPNYV3b1mHf5wdt4oaEPhTgDja7cGFcWqjp1zaxXvdeN/Q=="
+  },
+  {
+    "name": "pi-usage",
+    "package": "@narumitw/pi-usage",
+    "description": "Provider usage, limits and reset times",
+    "version": "0.69.2",
+    "url": "https://registry.npmjs.org/@narumitw/pi-usage/-/pi-usage-0.69.2.tgz",
+    "hash": "sha512-009L3JkiTMDSSneImSilFO3ouzzggms5lJM1BeOICkoRa2otCzkGQvkIHNXaB5gZmMl5rA44kusk9d/LFOD+3g==",
+    "npmDepsHash": "sha256-zbkfQ/NxyoU+1KTAiYEafP4V6/GWOFiARqZfZ0mWaCQ="
+  },
+  {
+    "name": "pi-context-view",
+    "package": "pi-context-view",
+    "description": "What fills the context window, including extension injections",
+    "version": "0.8.3",
+    "url": "https://registry.npmjs.org/pi-context-view/-/pi-context-view-0.8.3.tgz",
+    "hash": "sha512-gkeblBXXwz0uxhCSWa4RrMU64E3TYHr8vSyM10wcIkOAKaL8zoO6ob4bE9s+KjFfNVZ7WcPClSDnOOo2BjyhUw=="
+  },
+  {
+    "name": "pi-notify",
+    "package": "@pi-unipi/notify",
+    "description": "Desktop notifications on agent lifecycle events",
+    "version": "3.0.3",
+    "url": "https://registry.npmjs.org/@pi-unipi/notify/-/notify-3.0.3.tgz",
+    "hash": "sha512-nLWj94XcyBbygO0gwgBg7kQ+4+X38dFdzTTbDaOuUuQHQ32RDxUskPb4CC+0+RvdDgBiHbUGfoREK2dw8zb+uQ==",
+    "npmDepsHash": "sha256-22OvMdwtk6U3tbEMbuo8PY2ieeZlyCuFiwXOvnWeUw4="
+  },
+  {
+    "name": "pi-session-manager",
+    "package": "@vanillagreen/pi-session-manager",
+    "description": "Overlay to browse, search, resume, rename and delete sessions",
+    "version": "2.0.4",
+    "url": "https://registry.npmjs.org/@vanillagreen/pi-session-manager/-/pi-session-manager-2.0.4.tgz",
+    "hash": "sha512-sz3GKugmrgg1/Qshq3UIwzMtjXZIUHf/LIFOjAF1qQeGtIiDJDPWzSqahcbgAkvwczLJgZT9h2cfU6it7Tl4Fw=="
   }
 ]

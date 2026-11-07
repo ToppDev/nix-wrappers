@@ -121,6 +121,7 @@
       runtimePkgs = [
         pkgs.ffmpeg # pi-web-access: video frames, thumbnails and durations
         pkgs.yt-dlp # pi-web-access: YouTube stream URLs
+        pkgs.libnotify # pi-notify: native notifications go through notify-send
       ];
 
       env = {
