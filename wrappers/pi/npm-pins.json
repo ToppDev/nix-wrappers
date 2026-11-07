@@ -17,6 +17,15 @@
     "hash": "sha512-DTcAlgiHEa+/6JdYHfxMwlnoBK+//s14LXLHekyONKae45OD0Tk6QaGIpnWP9+Ftg2k3VQOT+kJoTxalTEGT3Q=="
   },
   {
+    "name": "pi-claude-code-ui",
+    "package": "pi-claude-code-ui",
+    "description": "Claude Code style tool output: one-line tool groups, highlighted diffs, activity spinner",
+    "version": "1.0.109",
+    "url": "https://registry.npmjs.org/pi-claude-code-ui/-/pi-claude-code-ui-1.0.109.tgz",
+    "hash": "sha512-tKdnVd2gp9lzslzCshB4BBDxTJL88I6emv5oMDaVUzYhUpamv4PD3NDDkCxSSSKKwEHjscs8e4KgIEaljfCuOg==",
+    "npmDepsHash": "sha256-0KZYzEa28w55o5V4lVNkd2V1sZ+XUkkpO1i64NPbdXU="
+  },
+  {
     "name": "pi-subagents",
     "package": "pi-subagents",
     "description": "Delegation to child agents and scripted multi-agent workflows",

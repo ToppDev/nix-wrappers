@@ -107,7 +107,16 @@
       # A list, since load order matters to some. The pin-update workflow opens a PR per new release
       extensions = map mkExtension (lib.importJSON ./npm-pins.json);
 
-      addFlag = map (ext: ["--extension" "${ext}"]) config.extensions;
+      addFlag =
+        map (ext: ["--extension" "${ext}"]) config.extensions
+        ++ [["--theme" "${./themes}"]];
+
+      settings = {
+        theme = lib.mkDefault "ayu-dark-plus"; # matches the helix wrapper's theme
+        terminalTheme = lib.mkDefault false; # pi-claude-code-ui would otherwise switch pi to the `system` theme
+        quietStartup = lib.mkDefault true;
+        powerline.welcome = lib.mkDefault false; # pi-powerline-footer's 30 s startup splash
+      };
 
       runtimePkgs = [
         pkgs.ffmpeg # pi-web-access: video frames, thumbnails and durations
@@ -126,9 +135,11 @@
         [
           # pi-subagents otherwise launches children as `node cli.js` straight from the package, skipping this wrapper's extensions
           ''export PI_SUBAGENT_PI_BINARY="''${PI_SUBAGENT_PI_BINARY:-''${BASH_SOURCE[0]}}"''
+          # pi's own default, made explicit: pi-claude-code-ui falls back to ~/.pi instead and would miss the settings
+          ''export PI_CODING_AGENT_DIR="''${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"''
         ]
         ++ lib.optional (config.settings != {}) ''
-          pi_dir="''${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
+          pi_dir="$PI_CODING_AGENT_DIR"
           pi_settings="$pi_dir/settings.json"
           mkdir -p "$pi_dir"
           [ -s "$pi_settings" ] || echo '{}' > "$pi_settings"
