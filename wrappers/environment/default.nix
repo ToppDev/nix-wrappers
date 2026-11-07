@@ -45,6 +45,7 @@
       selfpkgs.git
       selfpkgs.helix
       selfpkgs.lazygit
+      selfpkgs.pi
       selfpkgs.tmux
     ];
   };
