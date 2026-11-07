@@ -166,12 +166,11 @@
   },
   {
     "name": "pi-notify",
-    "package": "@pi-unipi/notify",
-    "description": "Desktop notifications on agent lifecycle events",
-    "version": "3.0.3",
-    "url": "https://registry.npmjs.org/@pi-unipi/notify/-/notify-3.0.3.tgz",
-    "hash": "sha512-nLWj94XcyBbygO0gwgBg7kQ+4+X38dFdzTTbDaOuUuQHQ32RDxUskPb4CC+0+RvdDgBiHbUGfoREK2dw8zb+uQ==",
-    "npmDepsHash": "sha256-22OvMdwtk6U3tbEMbuo8PY2ieeZlyCuFiwXOvnWeUw4="
+    "package": "@ethantang1024/pi-notify",
+    "description": "Desktop notifications when a run finishes, errors or asks a question, only while the terminal is unfocused",
+    "version": "1.0.1",
+    "url": "https://registry.npmjs.org/@ethantang1024/pi-notify/-/pi-notify-1.0.1.tgz",
+    "hash": "sha512-oj0m7itTFN6Ecuy83x5XOxT/yeIa2OkkgkeK5lxCNi+MRo48CvoMAl2Ftne7ujGkiT621W/539bzhCk3TanJFw=="
   },
   {
     "name": "pi-session-manager",
