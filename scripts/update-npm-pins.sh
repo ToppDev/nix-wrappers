@@ -52,11 +52,11 @@ pin() {
       npm install --package-lock-only --legacy-peer-deps --ignore-scripts --no-audit --no-fund --silent
     )
     mkdir -p "$lockdir"
-    cp "$work/package/package-lock.json" "$lockdir/$name.json"
-    deps_hash="$(prefetch-npm-deps "$lockdir/$name.json" 2>/dev/null)"
+    cp "$work/package/package-lock.json" "$lockdir/$name.lock.json"
+    deps_hash="$(prefetch-npm-deps "$lockdir/$name.lock.json" 2>/dev/null)"
     rm -rf "$work"
   else
-    rm -f "$lockdir/$name.json"
+    rm -f "$lockdir/$name.lock.json"
   fi
 
   jq --indent 2 --arg n "$name" --arg v "$version" --arg u "$url" --arg h "$hash" --arg d "$deps_hash" '

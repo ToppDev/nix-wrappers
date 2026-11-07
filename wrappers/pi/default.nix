@@ -12,6 +12,9 @@
 
     # Build fixes per extension, kept here so npm-pins.json stays plain data the updater can rewrite
     extensionOverrides = {
+      # Its fallback theme.json beside the extension, so a personal one in the agent dir still wins.
+      # Pink model and teal path by default, orange here to match the pi theme
+      pi-powerline-footer.postInstall = "cp ${./powerline-footer-theme.json} $out/theme.json";
       # Its bundled ast-grep CLI is a generic-linux binary, and it is preferred over one on PATH
       pi-lens = {
         nativeBuildInputs = [pkgs.python3 pkgs.autoPatchelfHook];
@@ -48,7 +51,7 @@
               ${lib.getExe pkgs.jq} 'del(.devDependencies, .scripts, .bundleDependencies, .bundledDependencies)' package.json > package.json.tmp
               mv package.json.tmp package.json
               rm -rf node_modules
-              cp ${./npm-locks + "/${pin.name}.json"} package-lock.json
+              cp ${./npm-locks + "/${pin.name}.lock.json"} package-lock.json # not `<name>.json`, which pi-lens would read as its project config
             '';
             npmFlags = ["--legacy-peer-deps"]; # pi supplies its SDK to extensions, a physical copy would shadow it
             nativeBuildInputs = [pkgs.python3]; # node-gyp, for addons without a prebuilt binary
@@ -64,6 +67,7 @@
         pkgs.runCommand "${pin.name}-${pin.version}" {} ''
           mkdir $out
           tar -xzf ${src} -C $out --strip-components=1
+          ${extensionOverrides.${pin.name}.postInstall or ""}
         '';
   in {
     imports = [wlib.modules.default];

@@ -1,0 +1,26 @@
+{
+  "colors": {
+    "model": "accent",
+    "shellMode": "accent",
+    "path": "#ff9966",
+    "gitDirty": "warning",
+    "gitClean": "success",
+    "thinking": "thinkingOff",
+    "thinkingMinimal": "thinkingMinimal",
+    "thinkingLow": "thinkingLow",
+    "thinkingMedium": "thinkingMedium",
+    "thinkingHigh": "thinkingHigh",
+    "thinkingXhigh": "thinkingXhigh",
+    "thinkingMax": "thinkingMax",
+    "context": "dim",
+    "contextWarn": "warning",
+    "contextError": "error",
+    "cacheHit": "success",
+    "cacheHitWarn": "warning",
+    "cacheHitError": "error",
+    "cost": "text",
+    "tokens": "muted",
+    "separator": "dim",
+    "border": "borderMuted"
+  }
+}

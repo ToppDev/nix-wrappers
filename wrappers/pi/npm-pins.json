@@ -180,5 +180,39 @@
     "version": "2.0.4",
     "url": "https://registry.npmjs.org/@vanillagreen/pi-session-manager/-/pi-session-manager-2.0.4.tgz",
     "hash": "sha512-sz3GKugmrgg1/Qshq3UIwzMtjXZIUHf/LIFOjAF1qQeGtIiDJDPWzSqahcbgAkvwczLJgZT9h2cfU6it7Tl4Fw=="
+  },
+  {
+    "name": "pi-intercom",
+    "package": "pi-intercom",
+    "description": "1:1 messages between pi sessions on the same machine, and a supervisor line for pi-subagents children",
+    "version": "0.18.1",
+    "url": "https://registry.npmjs.org/pi-intercom/-/pi-intercom-0.18.1.tgz",
+    "hash": "sha512-hY3y+vF6CrkpV0N/55pEsl3DSVjGerlTCQDY2mt37o0jQj8SLW+GmQoKyAEgCyfcxrqJb+Tx4hp4eXqM2hLYgg==",
+    "npmDepsHash": "sha256-Z5+F+Zlw6Nw399ie5dKQTQlOqf9ExNLv7CfOxBNGAvs="
+  },
+  {
+    "name": "pi-goal-x",
+    "package": "pi-goal-x",
+    "description": "/goal planning with persistent progress and an independent completion auditor",
+    "version": "0.34.1",
+    "url": "https://registry.npmjs.org/pi-goal-x/-/pi-goal-x-0.34.1.tgz",
+    "hash": "sha512-uWtllp3/WjNBbb6YqPduiEsr2K6FGewTty4C94j7yjpvOcKKI4tuJobee2dF5TY8gXvQsLGyKR38sd1WA3TkJQ=="
+  },
+  {
+    "name": "pi-herdr-tools",
+    "package": "@henryqw/pi-herdr-tools",
+    "description": "Clone, hand off, name and finish pi conversations in herdr panes",
+    "version": "6.0.0",
+    "url": "https://registry.npmjs.org/@henryqw/pi-herdr-tools/-/pi-herdr-tools-6.0.0.tgz",
+    "hash": "sha512-R12uvKO7Rdgyx3ZUSXdIGxOtvncPY5ksCWHC+269rX/swCaVTXdFiJDUmZLCACjmgm9kZZX8tiELiW+cyyadMA==",
+    "npmDepsHash": "sha256-KQq8EOr0/beogMLYRVfaA8HIVCIBj+uMG/PowsGs1vY="
+  },
+  {
+    "name": "pi-vcc",
+    "package": "@sting8k/pi-vcc",
+    "description": "Algorithmic compaction without model calls, transcript preserved",
+    "version": "0.11.2",
+    "url": "https://registry.npmjs.org/@sting8k/pi-vcc/-/pi-vcc-0.11.2.tgz",
+    "hash": "sha512-KLWHilX6PJo+7961lRDNxY2+X1LPSMSL5a1+yoR0VKVnci0ZwRGysRiF6qsnX0dcCfc2Nbzg3cGW4m69YypjkQ=="
   }
 ]

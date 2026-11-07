@@ -24,12 +24,14 @@
     "greenBg": "#26321f",
     "redBg": "#312227",
     "magentaBg": "#2c2a3c",
-    "yellowBg": "#302a20"
+    "yellowBg": "#302a20",
+    "lightOrange": "#ff9966",
+    "darkOrange": "#cc3300"
   },
   "colors": {
     "accent": "orange",
-    "border": "blue",
-    "borderAccent": "orange",
+    "border": "orange",
+    "borderAccent": "yellow",
     "borderMuted": "darkGray",
     "success": "green",
     "error": "red",
@@ -76,12 +78,12 @@
     "syntaxOperator": "orange",
     "syntaxPunctuation": "foreground",
     "thinkingOff": "gray",
-    "thinkingMinimal": "popupFg",
-    "thinkingLow": "blue",
-    "thinkingMedium": "cyan",
-    "thinkingHigh": "magenta",
-    "thinkingXhigh": "pink",
-    "thinkingMax": "orange",
+    "thinkingMinimal": "lightGray",
+    "thinkingLow": "yellow",
+    "thinkingMedium": "orange",
+    "thinkingHigh": "lightOrange",
+    "thinkingXhigh": "red",
+    "thinkingMax": "darkOrange",
     "bashMode": "green"
   },
   "export": {
