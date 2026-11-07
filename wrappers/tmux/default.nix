@@ -93,6 +93,7 @@
         set -g status-position top
         set -g extended-keys on
         set -g extended-keys-format csi-u # unambiguous modified keys, which pi expects
+        set -g focus-events on           # forward terminal focus changes, for apps that stay quiet while focused
         # set -g default-terminal "''${TERM}"
         # set-option -g default-shell "''${SHELL}"
         set -g pane-active-border-style 'fg=magenta,bg=default'
