@@ -143,9 +143,9 @@
     "name": "cc-safety-net",
     "package": "cc-safety-net",
     "description": "Blocks destructive commands and secret file access",
-    "version": "2.7.4",
-    "url": "https://registry.npmjs.org/cc-safety-net/-/cc-safety-net-2.7.4.tgz",
-    "hash": "sha512-KgHO8KpdbkEYXBwLXzW3TMTYaYFysIH11J4OrmgzNPNYV3b1mHf5wdt4oaEPhTgDja7cGFcWqjp1zaxXvdeN/Q=="
+    "version": "2.7.13",
+    "url": "https://registry.npmjs.org/cc-safety-net/-/cc-safety-net-2.7.13.tgz",
+    "hash": "sha512-3Idc7J8cF1x4rcWmKhSE/y+beHgDkwKvANWIQVdH4FyQHsbUBlez/0bJwAjhy5GGa0G6Nn+683L+2SvHsJFa3A=="
   },
   {
     "name": "pi-usage",
