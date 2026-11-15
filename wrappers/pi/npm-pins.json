@@ -109,10 +109,10 @@
     "name": "pi-add-dir",
     "package": "@henryqw/pi-add-dir",
     "description": "/add-dir for context, skills and file search outside the cwd",
-    "version": "3.4.0",
-    "url": "https://registry.npmjs.org/@henryqw/pi-add-dir/-/pi-add-dir-3.4.0.tgz",
-    "hash": "sha512-MBb/AJLyLJyRCBTFW6WdotnRsz9qXuqmkV0SKWzhKakIRV8Rq6VxL5NhgIv7RCImuNYG5RhWTjKotLQsUEVFDg==",
-    "npmDepsHash": "sha256-6oX5pCWGfoeJn9BsZWrRfx/PhuBeqW61mrYNm0KE2yI="
+    "version": "3.4.1",
+    "url": "https://registry.npmjs.org/@henryqw/pi-add-dir/-/pi-add-dir-3.4.1.tgz",
+    "hash": "sha512-uwmsYBqtL0qTQt7Ud9HEuRrjC1eMFHzzHHBG3MSDuH81T6vZjASMnmGUjyxA05PKmi7OZbNwh87wztZTyqRd+Q==",
+    "npmDepsHash": "sha256-Gmn0LJC6vuu0pSUS+aNWGSZ+fNfP2m/BZEFAnTyIRPA="
   },
   {
     "name": "pi-simplify",
