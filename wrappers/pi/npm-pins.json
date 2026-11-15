@@ -160,9 +160,9 @@
     "name": "pi-context-view",
     "package": "pi-context-view",
     "description": "What fills the context window, including extension injections",
-    "version": "0.8.3",
-    "url": "https://registry.npmjs.org/pi-context-view/-/pi-context-view-0.8.3.tgz",
-    "hash": "sha512-gkeblBXXwz0uxhCSWa4RrMU64E3TYHr8vSyM10wcIkOAKaL8zoO6ob4bE9s+KjFfNVZ7WcPClSDnOOo2BjyhUw=="
+    "version": "0.8.4",
+    "url": "https://registry.npmjs.org/pi-context-view/-/pi-context-view-0.8.4.tgz",
+    "hash": "sha512-ss1WICGiQGTJszw8cqVsW/+cjtTUvM9EkiPUNCuAa3KwcYOscjpZi+RIU5gcdyFhe5KR46SRsy8X5Kq6nal4cg=="
   },
   {
     "name": "pi-notify",
