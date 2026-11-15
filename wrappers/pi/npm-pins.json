@@ -201,10 +201,10 @@
     "name": "pi-herdr-tools",
     "package": "@henryqw/pi-herdr-tools",
     "description": "Clone, hand off, name and finish pi conversations in herdr panes",
-    "version": "6.0.0",
-    "url": "https://registry.npmjs.org/@henryqw/pi-herdr-tools/-/pi-herdr-tools-6.0.0.tgz",
-    "hash": "sha512-R12uvKO7Rdgyx3ZUSXdIGxOtvncPY5ksCWHC+269rX/swCaVTXdFiJDUmZLCACjmgm9kZZX8tiELiW+cyyadMA==",
-    "npmDepsHash": "sha256-KQq8EOr0/beogMLYRVfaA8HIVCIBj+uMG/PowsGs1vY="
+    "version": "6.1.0",
+    "url": "https://registry.npmjs.org/@henryqw/pi-herdr-tools/-/pi-herdr-tools-6.1.0.tgz",
+    "hash": "sha512-Ir4yA9HCWKHCe6Q2ciT6nBhJYOA2BrLav9k91xKAvn77s+5JdqP1bjuKnkkXO93xv78ICu2DWbElvSJ9VPgmfw==",
+    "npmDepsHash": "sha256-ctJj1PKCN9TOYEZS3Quc1Bm9Qo4CeE9qXYi3E06Fq0I="
   },
   {
     "name": "pi-vcc",
