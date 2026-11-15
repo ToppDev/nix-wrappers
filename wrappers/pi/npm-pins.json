@@ -151,10 +151,10 @@
     "name": "pi-usage",
     "package": "@narumitw/pi-usage",
     "description": "Provider usage, limits and reset times",
-    "version": "0.69.2",
-    "url": "https://registry.npmjs.org/@narumitw/pi-usage/-/pi-usage-0.69.2.tgz",
-    "hash": "sha512-009L3JkiTMDSSneImSilFO3ouzzggms5lJM1BeOICkoRa2otCzkGQvkIHNXaB5gZmMl5rA44kusk9d/LFOD+3g==",
-    "npmDepsHash": "sha256-zbkfQ/NxyoU+1KTAiYEafP4V6/GWOFiARqZfZ0mWaCQ="
+    "version": "0.69.3",
+    "url": "https://registry.npmjs.org/@narumitw/pi-usage/-/pi-usage-0.69.3.tgz",
+    "hash": "sha512-SzoQII24eiS7GTmn4yXgCvuLMMRUI/DcHoQOHYvhOcDK/RvbO+w/Rqv/nqS88hlO05MYEDEtMZcD9uXVwdbvAQ==",
+    "npmDepsHash": "sha256-3foN8WMJR2IeTV6plRWq+A1XLhOzSTuy1V0wkb5Jay0="
   },
   {
     "name": "pi-context-view",
