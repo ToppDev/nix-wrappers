@@ -20,10 +20,10 @@
     "name": "pi-claude-code-ui",
     "package": "pi-claude-code-ui",
     "description": "Claude Code style tool output: one-line tool groups, highlighted diffs, activity spinner",
-    "version": "1.0.109",
-    "url": "https://registry.npmjs.org/pi-claude-code-ui/-/pi-claude-code-ui-1.0.109.tgz",
-    "hash": "sha512-tKdnVd2gp9lzslzCshB4BBDxTJL88I6emv5oMDaVUzYhUpamv4PD3NDDkCxSSSKKwEHjscs8e4KgIEaljfCuOg==",
-    "npmDepsHash": "sha256-0KZYzEa28w55o5V4lVNkd2V1sZ+XUkkpO1i64NPbdXU="
+    "version": "1.0.112",
+    "url": "https://registry.npmjs.org/pi-claude-code-ui/-/pi-claude-code-ui-1.0.112.tgz",
+    "hash": "sha512-fGd+IeRbUnlxkL375VPSiDSk4QHrz95nTCCijPp9Vn9nquMppDKZ9TmCpph/59pS6d+L5ZZ2JXsN4tNdm0AsmQ==",
+    "npmDepsHash": "sha256-uNtgO/dPzBepEeeKnJ9vGmrKH+mmGVj8A2G0WpvW36E="
   },
   {
     "name": "pi-subagents",
