@@ -1,12 +1,12 @@
 {
   "name": "pi-hermes-memory",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "pi-hermes-memory",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "license": "MIT",
       "dependencies": {
         "better-sqlite3": "^13.0.3",
@@ -19,9 +19,9 @@
       }
     },
     "node_modules/ansi-regex": {
-      "version": "6.5.0",
-      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.5.0.tgz",
-      "integrity": "sha512-zhvbbbdt1kbw7EJ9OQoxmQcuaNR9P5kTj7e/YdmOSU10aHWbycofJxA6jKfoEy3vlLdctOF9ZHaxLtmSm998wQ==",
+      "version": "6.6.0",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.6.0.tgz",
+      "integrity": "sha512-XZ5apbzreCbXSKwPjJstu8R0zOi247w3XYwWxtwBXgpZrCyc1Ka7p9/xY0A9/diMewmHbEKz+FIraWaEWjlN5g==",
       "license": "MIT",
       "engines": {
         "node": ">=12"
@@ -31,9 +31,9 @@
       }
     },
     "node_modules/better-sqlite3": {
-      "version": "13.0.3",
-      "resolved": "https://registry.npmjs.org/better-sqlite3/-/better-sqlite3-13.0.3.tgz",
-      "integrity": "sha512-RbOBxmLBG8uvFUc15X9+9SFemKcQ0WBuISBVkpuiaUB2qblC8UWlHEjdWVoZ8AdhSwmoEgsiXKfopX0CQxaACQ==",
+      "version": "13.2.0",
+      "resolved": "https://registry.npmjs.org/better-sqlite3/-/better-sqlite3-13.2.0.tgz",
+      "integrity": "sha512-Z8Q/9x/uNyKxA1v4FNodyItRVRw1TeKBrmj32JhxhR0ceNcBY+wMobt/Bv7M7TzwPAXjnZRtNaEsATnUZSKWZQ==",
       "license": "MIT",
       "dependencies": {
         "node-addon-api": "^8.0.0"
