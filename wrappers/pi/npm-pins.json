@@ -3,10 +3,10 @@
     "name": "pi-plan-mode",
     "package": "@narumitw/pi-plan-mode",
     "description": "Codex-like read-only /plan mode",
-    "version": "0.60.0",
-    "url": "https://registry.npmjs.org/@narumitw/pi-plan-mode/-/pi-plan-mode-0.60.0.tgz",
-    "hash": "sha512-ea+KiLQo4P3tn5Orp/l8sdsvSXjq+Ws3032hakwh9bse0TkONjDpAXPrgww2ppL9XE1jE1kson6jr0jHxpD1kQ==",
-    "npmDepsHash": "sha256-CDgp8CzohY+rEB/lMQHE5uhMIR1ylVOKH3sAH20u1Ak="
+    "version": "0.60.1",
+    "url": "https://registry.npmjs.org/@narumitw/pi-plan-mode/-/pi-plan-mode-0.60.1.tgz",
+    "hash": "sha512-TRG8ncSkkS9qgDSxIgRr5S5hohvB9pC/GaNb1OrIDnkXTDVL9SlU27B45MoZILQdTLzo8qklaniyhBx+7xZ4RA==",
+    "npmDepsHash": "sha256-rfdRjI7mcet3I+ibAAc4hZCX80gQk9j3H3Ihj5RraKY="
   },
   {
     "name": "pi-powerline-footer",
