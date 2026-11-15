@@ -100,10 +100,10 @@
     "name": "pi-lens",
     "package": "pi-lens",
     "description": "Live LSP, linter, formatter and type-check feedback",
-    "version": "4.4.10",
-    "url": "https://registry.npmjs.org/pi-lens/-/pi-lens-4.4.10.tgz",
-    "hash": "sha512-H5vW3we1gf19c6k4e8yB1/2y3MCykgOg4UT/RH0xQ7f6/bbrQhhQ1VwHgEwexNErn+VZZZcCngIt4o3YGm6wvw==",
-    "npmDepsHash": "sha256-5nTZOD3bqn5uQx/gJ51/svUEg/Y6bxcjaFTecjeSlvM="
+    "version": "4.5.0",
+    "url": "https://registry.npmjs.org/pi-lens/-/pi-lens-4.5.0.tgz",
+    "hash": "sha512-wt5yCTAbwrOGY5l5BwnuIkUqcUwPMl7JfSLRCPC2Yp0GgkMQ5rSyUWTOs5sEYuDizq6Wif3xDzyD81ZOZ5F7dQ==",
+    "npmDepsHash": "sha256-zjXkd6fOJR6PFmQUFQFaNH9gZg3XOMzCF25IF3r+Nog="
   },
   {
     "name": "pi-add-dir",
