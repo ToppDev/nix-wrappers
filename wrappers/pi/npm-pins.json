@@ -210,8 +210,8 @@
     "name": "pi-vcc",
     "package": "@sting8k/pi-vcc",
     "description": "Algorithmic compaction without model calls, transcript preserved",
-    "version": "0.11.2",
-    "url": "https://registry.npmjs.org/@sting8k/pi-vcc/-/pi-vcc-0.11.2.tgz",
-    "hash": "sha512-KLWHilX6PJo+7961lRDNxY2+X1LPSMSL5a1+yoR0VKVnci0ZwRGysRiF6qsnX0dcCfc2Nbzg3cGW4m69YypjkQ=="
+    "version": "0.12.0",
+    "url": "https://registry.npmjs.org/@sting8k/pi-vcc/-/pi-vcc-0.12.0.tgz",
+    "hash": "sha512-TMjjzGIJb/JMspafFK40IRHdlnfZOIftzWlhynL+sljTtxqHBH2g7RZ9oC1+nZKO9xbaCJVVb30edK5oQhILfQ=="
   }
 ]
