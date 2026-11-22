@@ -29,10 +29,10 @@
     "name": "pi-subagents",
     "package": "pi-subagents",
     "description": "Delegation to child agents and scripted multi-agent workflows",
-    "version": "0.87.0",
-    "url": "https://registry.npmjs.org/pi-subagents/-/pi-subagents-0.87.0.tgz",
-    "hash": "sha512-+XjSB0xEUqrvodRh3bSQGj5/DqCfI/bLlYb0PYfBPFR757S/oOGTWA6uAAOsg3SqAu2ZYyH04Up2Zbi6q4OPMA==",
-    "npmDepsHash": "sha256-6tFqGoccoHtxHIpLntRVYOKGYfpcbIOv8QNZLwBac3c="
+    "version": "0.89.2",
+    "url": "https://registry.npmjs.org/pi-subagents/-/pi-subagents-0.89.2.tgz",
+    "hash": "sha512-fYJv5l1mfvVh/BPhbla0//FtNxrSSw2V3mOwbC5BJPWEWd/xHMFT4KnsaKWe33PmxfwsNjRo5wYl7XcgknKL9w==",
+    "npmDepsHash": "sha256-eRBPyq0cehWZY9a4gWgBT2vTgcOOrXMVdtzd0WD5iNM="
   },
   {
     "name": "pi-prompt-template-model",
