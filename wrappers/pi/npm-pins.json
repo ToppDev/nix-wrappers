@@ -73,10 +73,10 @@
     "name": "pi-web-access",
     "package": "pi-web-access",
     "description": "Web search, fetching and content extraction",
-    "version": "0.47.0",
-    "url": "https://registry.npmjs.org/pi-web-access/-/pi-web-access-0.47.0.tgz",
-    "hash": "sha512-Z176wTJjHw9Y+NpZ3WxOmKnh/7Sy3mu4QR05nBS/v6GRd5Cp7g5GnLIzI9LOT1IdR1105qXFS+L3LBUfkOMy8g==",
-    "npmDepsHash": "sha256-bR8du8Jfpbaz7QNmwyzRt5SGNxZSndTbQMfYMkar8HE="
+    "version": "0.48.0",
+    "url": "https://registry.npmjs.org/pi-web-access/-/pi-web-access-0.48.0.tgz",
+    "hash": "sha512-9+B5e2kLtN0qYs2LZ6D8yOI9TbjQTnf4AKON/Qy2nseE//fH71u60Icul6Ua7Pp7R5Ro1oPJpiDqdUut730UOg==",
+    "npmDepsHash": "sha256-smkyF05OfrWihzwDipwpLxAi7kz/DjatMNZRnjOwVNY="
   },
   {
     "name": "pi-interactive-shell",
