@@ -91,10 +91,10 @@
     "name": "pi-hermes-memory",
     "package": "pi-hermes-memory",
     "description": "Persistent memory and session search in local SQLite",
-    "version": "0.10.0",
-    "url": "https://registry.npmjs.org/pi-hermes-memory/-/pi-hermes-memory-0.10.0.tgz",
-    "hash": "sha512-H0q2jTsyBcp0Q85eZFABke2gFId646pHkkgp2YqSMCumyTWxndsTtmdX1e97OW5nh+mu/SMRYLnxNlO9zLfutw==",
-    "npmDepsHash": "sha256-nKH5ptPLp9/E8Xdsb4bSgErBQAppavyWTJk53NCClEk="
+    "version": "0.11.0",
+    "url": "https://registry.npmjs.org/pi-hermes-memory/-/pi-hermes-memory-0.11.0.tgz",
+    "hash": "sha512-pIcq59OHDCOuwBIsEz+dkFE9hbpso0xOsZjk4smkSmGVYJrR1xqdzPg8h2XHZjb+KfCwlvvuabowefQY+hMnHw==",
+    "npmDepsHash": "sha256-91dakAvZ/eoJT/1p8sD8T01ijYX8rC7riamcEVmO7o0="
   },
   {
     "name": "pi-lens",
