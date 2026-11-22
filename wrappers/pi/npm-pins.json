@@ -126,10 +126,10 @@
     "name": "pi-claude-bridge",
     "package": "pi-claude-bridge",
     "description": "Claude Code via the Agent SDK as a model provider",
-    "version": "0.11.0",
-    "url": "https://registry.npmjs.org/pi-claude-bridge/-/pi-claude-bridge-0.11.0.tgz",
-    "hash": "sha512-ojLuXl++12T2QcQ5PjRzzdpS9R4cq1fp+PsRDMXmB3fukxTIE7rQXpmwSajV7EGxiZmPHOuGPaa+79DQO9Q01w==",
-    "npmDepsHash": "sha256-qksmudilNxEYJi3rCLNN3o1JLKWSx7Uk0r8wPAsZaSs="
+    "version": "0.13.0",
+    "url": "https://registry.npmjs.org/pi-claude-bridge/-/pi-claude-bridge-0.13.0.tgz",
+    "hash": "sha512-n/psYcPhGvieyXBjdY/AYNM2GDJqIdWeKYY880F3Y6HVfP/NG9ZJk6lGxIZbNbqyofo2+6VPKP3HIpzNorQqsA==",
+    "npmDepsHash": "sha256-rhw6uee4syFbgSBO65u5lAt+YY7jyiPDNsJWeYYglqA="
   },
   {
     "name": "pi-raw-paste",
